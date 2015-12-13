@@ -40,5 +40,13 @@ namespace Urb.Grid {
         }
 
         public bool Equals(Coords other) { return this == other; }
+
+        static public IEnumerable<Coords> Iterate(int w, int h) {
+            for (var y = 0; y < h; y++)
+            for (var x = 0; x < w; x++) {
+                yield return new Coords(x, y);
+            }
+        }
+
     }
 }

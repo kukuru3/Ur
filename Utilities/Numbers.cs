@@ -97,5 +97,14 @@ namespace Urb.Utilities {
             return SM.Abs(value);
         }
 
+        static public int Sign(this int value) {
+            return SM.Sign(value);
+        }
+
+        static public int Sign(this float value) {
+            return SM.Sign(value);
+        }
+
+
     }
 }

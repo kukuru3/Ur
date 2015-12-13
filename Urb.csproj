@@ -51,6 +51,10 @@
     <Compile Include="Geometry\Rect.cs" />
     <Compile Include="Geometry\Vector.cs" />
     <Compile Include="Geometry\Vectors.cs" />
+    <Compile Include="Graph\Edge.cs" />
+    <Compile Include="Graph\Exceptions.cs" />
+    <Compile Include="Graph\Graph.cs" />
+    <Compile Include="Graph\Node.cs" />
     <Compile Include="Grid\Coords.cs" />
     <Compile Include="Grid\Grid2D.cs" />
     <Compile Include="Grid\IGrid.cs" />

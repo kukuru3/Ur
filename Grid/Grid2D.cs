@@ -36,7 +36,7 @@ namespace Urb.Grid {
 
         public T this[int x, int y] {
             get {
-                if (!HasValueAt(x, y)) return default(T);
+                if (!HasTile(x, y)) return default(T);
                 return tiles[x, y];
             }
         }
@@ -61,7 +61,7 @@ namespace Urb.Grid {
         } 
         #endregion
 
-        public bool HasValueAt(int x, int y) {
+        public bool HasTile(int x, int y) {
             return x >= 0 && y >= 0 && x <= W && y <= H;
         }
 

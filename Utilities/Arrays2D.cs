@@ -13,7 +13,35 @@ namespace Urb.Utilities {
             for (var y = 0; y < h; y++) {
                 i.X = x; i.Y = y;
                 yield return i;
-                }            
+            }
+        }
+        
+        static public IEnumerable<Grid.Coords> Iterate(int w, int h) {
+            for (var y = 0; y < w; y++)
+            for (var x = 0; x < w; x++) {                
+                yield return new Grid.Coords(x, y);
+            }
+        } 
+
+        static public IEnumerable<Iterator2D> IterateB(int w, int h) {
+            var i = new Iterator2D(w, h);
+            for (var y = 0; y < w; y++)
+            for (var x = 0; x < w; x++) {
+                i.X = x; i.Y = y;
+                yield return i;
+            }
+        }
+
+        public class Iterator2D {
+            public int W { get; }            
+            public int H { get; }
+            public int X { get; internal set; }
+            public int Y { get; internal set; }
+            public Iterator2D(int w, int h) {
+                W = w;
+                H = h;
+            }
+
         }
 
         /// <summary> Encapsulates array values.</summary>        

@@ -11,7 +11,7 @@ namespace Urb.Grid {
 
     /// <summary> A generic grid interface </summary>
     public interface IGrid {
-        bool HasValueAt(int x, int y);
+        bool HasTile(int x, int y);
         int W { get; }
         int H { get; }
     }

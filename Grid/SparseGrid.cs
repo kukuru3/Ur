@@ -27,13 +27,30 @@ namespace Urb.Grid {
 
         }
 
+        public void Clear() {
+            backingCollection.Clear();
+            invalidateBoundingBox = true;
+        }
+
         #region Value access - publicly exposed
        
-        public bool HasValueAt(int x, int y) {
+        public T GetTile(int x, int y) {
+            T val;
+            backingCollection.TryGetValue(new Coords(x, y), out val);
+            return val;
+        }
+
+        public T GetTile(Coords crds) {
+            T val;
+            backingCollection.TryGetValue(crds, out val);
+            return val;
+        }
+
+        public bool HasTile(int x, int y) {
             return backingCollection.ContainsKey(new Coords(x, y));
         } 
 
-        public IEnumerable<T> GetAll() {
+        public IEnumerable<T> GetAllTiles() {
             return backingCollection.Values;
         }
 
@@ -51,22 +68,7 @@ namespace Urb.Grid {
 
         int IGrid.H { get { return BoundingBox.Height; } }
         #endregion
-
-        #region Value access
-        public T GetValue(int x, int y) {
-            T val;
-            backingCollection.TryGetValue(new Coords(x, y), out val);
-            return val;
-        }
-
-        public T GetValue(Coords crds) {
-            T val;
-            backingCollection.TryGetValue(crds, out val);
-            return val;
-        }
-
-        #endregion
-
+        
         #region Maintain and compute bounding box
 
         private Rect boundingBox;
