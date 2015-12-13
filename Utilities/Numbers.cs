@@ -85,8 +85,16 @@ namespace Urb.Utilities {
             return (float)SM.Sqrt(value);
         }
 
+        static public float Root(this double value) {
+            return (float)SM.Sqrt(value);
+        }
+
         static public float Abs(this float value) {
-            return (float)SM.Abs(value);
+            return SM.Abs(value);
+        }
+
+        static public int Abs(this int value) {
+            return SM.Abs(value);
         }
 
     }

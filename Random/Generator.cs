@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Urb.Utilities;
 
 namespace Urb.Random {
     public class Generator {
@@ -75,8 +76,8 @@ namespace Urb.Random {
             while(true) {
                 var u1 = Next(0f, 1f);
                 var v2 = Next(0f, 1f);
-                var u2 = (2 * v2 - 1f) * Math.Sqrt(2 / Math.E );
-                if (u1 * u1 <=  Math.Exp( u2 * u2 / (u1 * u1 * -2 ))) {
+                var u2 = (2 * v2 - 1f) * System.Math.Sqrt(2 / System.Math.E );
+                if (u1 * u1 <=  System.Math.Exp( u2 * u2 / (u1 * u1 * -2 ))) {
                     return (float)(u2 / u1);
                 }
             }
@@ -98,7 +99,7 @@ namespace Urb.Random {
                 z = x * x + y * y;
             } while (z > 1f || z == 0f);
             
-            var fac = (float)Math.Sqrt(-2f * Math.Log(z) / z);
+            var fac = Numbers.Root(-2f * System.Math.Log(z) / z);
             boxMullerSpare = x * fac;
             return y * fac;
         }

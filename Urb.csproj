@@ -45,13 +45,20 @@
     <Compile Include="Filesystem\LoadManager.cs" />
     <Compile Include="Filesystem\LoaderDeclarations.cs" />
     <Compile Include="Filesystem\Folders.cs" />
+    <Compile Include="Geometry\Calculate.cs" />
     <Compile Include="Geometry\Curves.cs" />
+    <Compile Include="Geometry\Polygon.cs" />
+    <Compile Include="Geometry\Rect.cs" />
+    <Compile Include="Geometry\Vector.cs" />
+    <Compile Include="Geometry\Vectors.cs" />
     <Compile Include="Grid\Coords.cs" />
     <Compile Include="Grid\Grid2D.cs" />
     <Compile Include="Grid\IGrid.cs" />
     <Compile Include="Grid\IHasCoords.cs" />
     <Compile Include="Grid\Rect.cs" />
     <Compile Include="Grid\SparseGrid.cs" />
+    <Compile Include="Geometry\Angle.cs" />
+    <Compile Include="Math\Matrix.cs" />
     <Compile Include="Random\PerlinNoise.cs" />
     <Compile Include="Utilities\Numbers.cs" />
     <Compile Include="Random\Generator.cs" />
@@ -62,7 +69,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Color\" />
-    <Folder Include="Math\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Urb.Utilities;
 
 namespace Urb.Grid {
     [System.Diagnostics.DebuggerDisplay("[{X},{Y}]")]
@@ -30,11 +31,11 @@ namespace Urb.Grid {
 
         public static float  Distance(Coords a, Coords b) {
             var dx = (a.X - b.X); var dy = (a.Y - b.Y);
-            return (float)Math.Sqrt(dx * dx + dy * dy);
+            return Numbers.Root(dx * dx + dy * dy);
         }
 
         public static int ManhattanDistance(Coords a, Coords b) {
-            var dx = Math.Abs(a.X - b.X); var dy = Math.Abs(a.Y - b.Y);
+            var dx = Numbers.Abs(a.X - b.X); var dy = Numbers.Abs(a.Y - b.Y);
             return dx + dy;
         }
 
