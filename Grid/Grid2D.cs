@@ -16,6 +16,24 @@ namespace Urb.Grid {
         public int W { get; }
         public int H { get; }
 
+        int IGrid.W {
+            get {
+                throw new NotImplementedException();
+            }
+        }
+
+        int IGrid.H {
+            get {
+                throw new NotImplementedException();
+            }
+        }
+
+        T IGrid<T>.this[int x, int y] {
+            get {
+                throw new NotImplementedException();
+            }
+        }
+
         public T this[int x, int y] {
             get {
                 if (!HasValueAt(x, y)) return default(T);
@@ -46,7 +64,11 @@ namespace Urb.Grid {
         public bool HasValueAt(int x, int y) {
             return x >= 0 && y >= 0 && x <= W && y <= H;
         }
-        
+
+        IEnumerable<T> IGrid<T>.GetAll() {
+            foreach (var t in tiles) yield return t;
+        }
+               
     }
 
    

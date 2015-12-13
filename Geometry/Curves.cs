@@ -41,13 +41,15 @@ namespace Urb.Geometry {
             var single = new float[n];
             // find individual distances, build a cumulative values array from it.
             for (var i = 0; i < n - 1; i++) {
-                single[i+1] = s[i].dist(s[i+1]); cumula[i+1] = cumula[i] + single[i+1];
+                single[i+1] = s[i].dist(s[i+1]);
+                cumula[i+1] = cumula[i] + single[i+1];
             }
             
             var result = new List<crds2>();
             var cursor = 0f;
             float max = cumula[n-1];
-            result.Add(s.First());
+            result.Add(s[0]);
+
             do {
                 cursor += spacing;
                 if (cursor >= max - float.Epsilon) break;
@@ -56,11 +58,12 @@ namespace Urb.Geometry {
                 var A = s[Max(i - 1, 0)];
                 var B = s[i];
                 var C = s[i+1];
-                var D = s[Min(i + 2, n-1) ];
+                var D = s[ (i < n - 2) ? i + 2 : n - 1 ]; // wut.
                 var crds = CubicInterpolate(A, B, C, D, mu - i);
                 result.Add(crds);
             } while (cursor < max);
-            result.Add(s.Last());
+
+            result.Add(s[n-1]);
             return result.ToArray();
             
         }

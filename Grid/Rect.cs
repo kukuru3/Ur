@@ -33,6 +33,7 @@ namespace Urb.Grid {
                 yield return new Coords(x, y);            
         }
 
+        /// <summary> Return true if coordinates supplied fall within this rect. </summary>        
         public bool Contains(Coords crds) {
             return crds.X >= X0 && crds.X <= X1 && crds.Y >= Y0 && crds.Y <= Y1;
         }
@@ -51,6 +52,10 @@ namespace Urb.Grid {
 
         public Rect Resize(int w, int h) {
             return new Rect(X0, Y0, w, h);
+        }
+
+        public static Rect FromBounds(int minX, int maxX, int minY, int maxY) {
+            return new Rect(minX, minY, maxX - minX + 1, maxY - minY + 1);
         }
     }
 }

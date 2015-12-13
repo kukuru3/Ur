@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using SM = System.Math;
 namespace Urb.Utilities {
+    /// <summary> Mathematics extension methods and other methods </summary>
     public static class Numbers {
 
         static public float Lerp(this float a, float b, float alpha) {
@@ -39,15 +40,19 @@ namespace Urb.Utilities {
         }
 
         static public int Floor(this float source) {
-            return (int)Math.Floor(source);
+            return (int)SM.Floor(source);
         }
 
         static public int Ceil(this float source) {
-            return (int)Math.Ceiling(source);
+            return (int)SM.Ceiling(source);
+        }
+
+        static public int Round(this float source) {
+            return (int)SM.Round(source);
         }
 
         static public bool Approximately(this float a, float b) {
-            return Math.Abs(a - b) <= float.Epsilon;
+            return SM.Abs(a - b) <= float.Epsilon;
         }
 
         static public float Wrap(this float a, float maxValue) {
@@ -72,6 +77,16 @@ namespace Urb.Utilities {
             if (value < min) return min;
             if (value > max) return max;
             return value;            
+        }
+
+        /// <param name="value"></param>
+        /// <returns>the square root of value</returns>
+        static public float Root(this float value) {
+            return (float)SM.Sqrt(value);
+        }
+
+        static public float Abs(this float value) {
+            return (float)SM.Abs(value);
         }
 
     }

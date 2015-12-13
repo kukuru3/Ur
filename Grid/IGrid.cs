@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 
 namespace Urb.Grid {
+    /// <summary> Any 2d grid of type T </summary>
+    /// <typeparam name="T">grid tile.</typeparam>
     public interface IGrid<T> : IGrid {
-        T this[int x, int y] { get; }        
+        T this[int x, int y] { get; }
+        IEnumerable<T> GetAll();
     }
 
-    public interface IGrid {        
+    /// <summary> A generic grid interface </summary>
+    public interface IGrid {
         bool HasValueAt(int x, int y);
         int W { get; }
         int H { get; }
