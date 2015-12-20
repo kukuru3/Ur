@@ -23,5 +23,14 @@ namespace Urb.Geometry {
             );
         }
 
+        public Rect Expand(float amount) {
+            return new Rect( X0 - amount, Y0 - amount, X1 + amount, Y1 + amount);
+        }
+
+        public bool Contains(Vector coords) {
+            var x = coords.x - X0;
+            var y = coords.y - Y0;
+            return x >= 0f && x <= W && y >= 0f && y <= H;
+        }
     }
 }

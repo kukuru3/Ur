@@ -12,7 +12,7 @@ namespace Urb.Graph {
         #endregion
 
         #region Properties
-        internal int Index { get; }
+        public int Index { get; }
         public Graph Graph { get; } 
         #endregion
 

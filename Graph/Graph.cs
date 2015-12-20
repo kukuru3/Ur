@@ -29,13 +29,17 @@ namespace Urb.Graph {
 
         #region Connection management
         public virtual Edge Connect(Node a, Node b) {
-            var edge = FindConnection(a, b);
-            if (edge != null) throw new GraphEdgeException(edge, "edge already exists!");
-            edge = new Edge(a, b);
-            a.RegisterEdge(edge);
-            b.RegisterEdge(edge);
-            edges.Add(edge);
+            var edge = new Edge(a, b);
+            TryRegisterEdge(edge);
             return edge;
+        }
+
+        protected void TryRegisterEdge(Edge e) {
+            var existing = FindConnection(e.A, e.B);
+            if (existing!= null) throw new GraphEdgeException(existing, "edge already exists!");
+            e.A.RegisterEdge(e);
+            e.B.RegisterEdge(e);
+            edges.Add(e);            
         }
 
         public void BreakConnection(Node a, Node b) {

@@ -14,28 +14,28 @@ namespace Urb.Utilities {
         static public float Min(params float[] numbers) {
             if (numbers.Length == 0) return 0f;
             var localMinimum = float.MaxValue;
-            for(var i = 0; i < numbers.Length; i++) if (i < localMinimum) localMinimum = i;            
+            for(var i = 0; i < numbers.Length; i++) if (numbers[i] < localMinimum) localMinimum = numbers[i];
             return localMinimum;
         }
 
         static public int   Max(params int[] numbers) {
             if (numbers.Length == 0) return 0;
             var localMax = int.MinValue;
-            for (var i = 0; i < numbers.Length; i++) if (i > localMax) localMax = i;
+            for (var i = 0; i < numbers.Length; i++) if (numbers[i] > localMax) localMax = numbers[i];
             return localMax;
         }
 
         static public int Min(params int[] numbers) {
             if (numbers.Length == 0) return 0;
             var localMin = int.MaxValue;
-            for (var i = 0; i < numbers.Length; i++) if (i < localMin) localMin = i;
+            for (var i = 0; i < numbers.Length; i++) if (numbers[i] < localMin) localMin = numbers[i];
             return localMin;
         }
 
         static public float Max(params float[] numbers) {
             if (numbers.Length == 0) return 0f;
             var localMax = float.MinValue;
-            for(var i = 0; i < numbers.Length; i++) if (i < localMax) localMax = i;            
+            for(var i = 0; i < numbers.Length; i++) if (numbers[i] < localMax) localMax = numbers[i];
             return localMax;
         }
 
@@ -61,9 +61,10 @@ namespace Urb.Utilities {
             return result;
         }
 
-        static public int Wrap(this int a, int maxValue) {
-            var result = a % maxValue;
-            if (result < 0) result += maxValue;
+        /// <summary> Wraps and integer value to be between 0 and divisor</summary>        
+        static public int Wrap(this int a, int divisor) {
+            var result = a % divisor;
+            if (result < 0) result += divisor;
             return result;
         }
 

@@ -5,8 +5,18 @@ using Urb.Utilities;
 namespace Urb.Geometry {
     /// <summary> All advanced geometry calculations exposed outside Ur will go through here. </summary>
     static public class Calculate {
-        public static float DistanceOfPointToSegment() {
-            throw new NotImplementedException();
+        public static float DistanceOfPointToSegment(Vector a, Vector b, Vector p) {
+            float l2 = Vectors.DistanceSquared(a, b);
+            if (l2 < 0.000001f) return a.Distance(p); // case : a == b
+            float t = Vectors.Dot(p - a, b - a) / l2;
+            if (t < 0f) return a.Distance(p);
+            if (t > 1f) return b.Distance(p);
+            Vector proj = a.Lerp(b, t);
+            return proj.Distance(p);
+        }
+
+        public static Rect AABB(params Vector[] points) {
+            return AABB((IEnumerable<Vector>)points);
         }
 
         public static Rect AABB(IEnumerable<Vector> points) {

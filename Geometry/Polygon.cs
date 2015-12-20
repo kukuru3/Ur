@@ -51,9 +51,11 @@ namespace Urb.Geometry {
                 var k = ix * jy - jx * iy;
                 x += (ix + jx) * k;
                 y += (iy + jy) * k;
-                x /= 6 * surface;
-                y /= 6 * surface;
+                
             }
+
+            x /= 6 * surface;
+            y /= 6 * surface;
             return new Vector(x, y);
             
         } }
