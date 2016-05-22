@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Urb.Grid {
+namespace Ur.Grid {
 
     [System.Diagnostics.DebuggerDisplay("Rect [{X0},{Y0} -> {X1},{Y1}] (W : {Width}, H : {Height})")]
     public struct Rect {
@@ -38,6 +38,9 @@ namespace Urb.Grid {
             return crds.X >= X0 && crds.X <= X1 && crds.Y >= Y0 && crds.Y <= Y1;
         }
 
+        public bool Contains (int x, int y) {
+            return x >= X0 && x <= X1 && y >= Y0 && y <= Y1;
+        }
         public Rect OffsetBy(int x, int y) {
             return new Rect(X0 + x, Y0 + y, Width, Height );
         }

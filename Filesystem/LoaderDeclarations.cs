@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Urb.Filesystem {
+namespace Ur.Filesystem {
     public enum LoadStates {
         Pending,
         Started,

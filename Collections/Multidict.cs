@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Urb.Collections {
+namespace Ur.Collections {
 
     public class Multidict<TKey, TValue> {
 

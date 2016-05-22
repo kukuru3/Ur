@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Urb.Random {
+namespace Ur.Random {
     static public class Utilities {
 
         static public T PickRandom<T>(this IEnumerable<T> source, Generator rng) {

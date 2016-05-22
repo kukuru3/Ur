@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Urb.Geometry {
+namespace Ur.Geometry {
     public struct Polygon {
 
-        public Vector[] Vertices { get; }
+        public Vector2[] Vertices { get; }
 
-        public Polygon(IEnumerable<Vector> points) {
+        public Polygon(IEnumerable<Vector2> points) {
             Vertices = points.ToArray();
         }
 
@@ -19,7 +19,7 @@ namespace Urb.Geometry {
             throw new NotImplementedException();
         }
 
-        public bool ContainsPoint(Vector point) {
+        public bool ContainsPoint(Vector2 point) {
             return Calculate.IsPointInConvexPolygon(this, point);
         }
 
@@ -27,9 +27,9 @@ namespace Urb.Geometry {
             throw new NotImplementedException();
         } }
 
-        public Vector Average { get {
+        public Vector2 Average { get {
             var n = Vertices.Length;
-            Vector sum = Vector.Zero;
+            Vector2 sum = Vector2.Zero;
             foreach (var pt in Vertices) sum += pt;
             return sum / n;
         } }
@@ -38,7 +38,7 @@ namespace Urb.Geometry {
             return Calculate.AABB(Vertices);
         } }
 
-        public Vector Centroid { get {
+        public Vector2 Centroid { get {
             var n = Vertices.Length;
             float sum = 0f;
             for (var i = 0; i < n; i++) { var j = i + 1; if (j == n) j = 0;                
@@ -56,19 +56,19 @@ namespace Urb.Geometry {
 
             x /= 6 * surface;
             y /= 6 * surface;
-            return new Vector(x, y);
+            return new Vector2(x, y);
             
         } }
 
-        static public Polygon CreateRegular(Vector center, float circleRadius, int numPoints) {
+        static public Polygon CreateRegular(Vector2 center, float circleRadius, int numPoints) {
             throw new NotImplementedException();
         }
         
-        static public implicit operator Polygon(Vector[] source) {
+        static public implicit operator Polygon(Vector2[] source) {
             return new Polygon(source);
         }
 
-        public Vector this[int index] {
+        public Vector2 this[int index] {
             get { return Vertices[index]; }            
         }
 

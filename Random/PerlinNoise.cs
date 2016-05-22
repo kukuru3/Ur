@@ -1,9 +1,9 @@
 ﻿// courtesy of http://freespace.virgin.net/hugo.elias/models/m_perlin.htm
 using System;
 using System.Collections.Generic;
-using Urb.Utilities;
+using Ur.Utilities;
 
-namespace Urb.Random {
+namespace Ur.Random {
     public class PerlinNoise {
 
         Generator rng;
@@ -16,11 +16,11 @@ namespace Urb.Random {
         /// <param name="persistence">Keep between 0.5 and 0.9 for best results</param>
         /// <param name="octaves">Keep above 3 for best results</param>        
         /// <remarks>Recommended usage : </remarks>
-        public PerlinNoise(float persistence, int octaves) {
+        public PerlinNoise(float persistence, int octaves, Generator explicitGenerator = null) {
             
             this.persistence = persistence;
             this.octaves     = octaves;
-            rng = new Generator();
+            rng = explicitGenerator ?? new Generator();
             
             bank = new float[LatticeDimensions, LatticeDimensions];
             foreach (var i in bank.Iterate()) i.Value = rng.Next(-1f, 1f);

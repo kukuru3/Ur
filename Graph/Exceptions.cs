@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Urb.Graph {
+namespace Ur.Graph {
     public class GraphStateException : Exception {
         public Graph Graph { get; }
         public GraphStateException(Graph g, string message) : base(message)  {

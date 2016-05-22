@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Urb.Utilities {
+namespace Ur.Utilities {
+    /// <summary> Contains extension methods </summary>
     public static class Arrays2D {
 
         /// <summary> Iterates through items of a 2-dimensional array</summary>
@@ -21,7 +22,7 @@ namespace Urb.Utilities {
             for (var x = 0; x < w; x++) {                
                 yield return new Grid.Coords(x, y);
             }
-        } 
+        }
 
         static public IEnumerable<Iterator2D> IterateB(int w, int h) {
             var i = new Iterator2D(w, h);

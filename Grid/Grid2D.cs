@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Urb.Utilities;
+using Ur.Utilities;
 
-namespace Urb.Grid {
+namespace Ur.Grid {
 
-    public delegate T Constructor<T>(IGrid<T> grid, int x, int y);
+    public delegate T Advanced2DConstructor<T>(IGrid<T> owner, int x, int y);
+    public delegate T Simple2DConstructor<T>(int x, int y);
 
     public class Grid2D<T> : IGrid<T> {
 
@@ -48,8 +49,8 @@ namespace Urb.Grid {
             tiles = new T[W, H];
         }
 
-        public Grid2D(int w, int h, Constructor<T> c) : this(w, h) {
-            foreach (var tile in tiles.Iterate()) tiles[tile.X, tile.Y] = c(this, tile.X, tile.Y);
+        public Grid2D(int w, int h, Simple2DConstructor<T> c) : this(w, h) {
+            foreach (var tile in tiles.Iterate()) tiles[tile.X, tile.Y] = c(tile.X, tile.Y);            
         }
 
         /// <summary> Careful, will retain the reference to the array</summary>        
@@ -62,10 +63,10 @@ namespace Urb.Grid {
         #endregion
 
         public bool HasTile(int x, int y) {
-            return x >= 0 && y >= 0 && x <= W && y <= H;
+            return x >= 0 && y >= 0 && x < W && y < H;
         }
 
-        IEnumerable<T> IGrid<T>.GetAll() {
+        public IEnumerable<T> GetAll() {
             foreach (var t in tiles) yield return t;
         }
                

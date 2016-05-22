@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Urb.Utilities;
+using Ur.Utilities;
 
-namespace Urb.Grid {
+namespace Ur.Grid {
     [System.Diagnostics.DebuggerDisplay("[{X},{Y}]")]
     public struct Coords : IEquatable<Coords> {
 
@@ -11,7 +11,9 @@ namespace Urb.Grid {
         public readonly int X;
         public readonly int Y;
         public override int GetHashCode() {
-            return (HASH_BASE + Y.GetHashCode()) * HASH_BASE + X.GetHashCode();
+            unchecked { 
+                return (HASH_BASE + Y.GetHashCode()) * HASH_BASE + X.GetHashCode();
+            }
         }
         public override bool Equals(object obj) {
             if (!(obj is Coords)) return false;
@@ -47,6 +49,11 @@ namespace Urb.Grid {
                 yield return new Coords(x, y);
             }
         }
+
+        public Coords Move(int deltaX, int deltaY) {
+            return new Coords(this.X + deltaX, this.Y + deltaY);
+        }
+
 
     }
 }

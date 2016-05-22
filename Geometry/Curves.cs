@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using crds2 = Ur.crds2;
-using static Urb.Utilities.Numbers;
+using crds2 = Ur.Geometry.Vector2;
+using static Ur.Utilities.Numbers;
 
-namespace Urb.Geometry {
+namespace Ur.Geometry {
     public static class Curves {
 
 
@@ -41,7 +41,7 @@ namespace Urb.Geometry {
             var single = new float[n];
             // find individual distances, build a cumulative values array from it.
             for (var i = 0; i < n - 1; i++) {
-                single[i+1] = s[i].dist(s[i+1]);
+                single[i+1] = Vectors.Distance(s[i], s[i+1]);
                 cumula[i+1] = cumula[i] + single[i+1];
             }
             

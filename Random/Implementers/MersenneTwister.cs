@@ -1,5 +1,5 @@
 ﻿
-namespace Urb.Random.Implementers {
+namespace Ur.Random.Implementers {
     internal class MersenneTwister {
 
         // Period parameters  

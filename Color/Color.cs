@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Urb.Utilities;
-namespace Urb.Color {
+using Ur.Utilities;
+
+namespace Ur.Color {
 
     public struct Color : IInterpolable<Color>
     {

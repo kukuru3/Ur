@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Urb.Grid {
+namespace Ur.Grid {
     /// <summary> Tiles are added and removed haphazardly in this class, and there are no bounds limits (0 is not lowest)</summary>
     /// <typeparam name="T">Type of grid tile</typeparam>
     public class SparseGrid<T> : IGrid {

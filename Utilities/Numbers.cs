@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SM = System.Math;
-namespace Urb.Utilities {
+namespace Ur.Utilities {
     /// <summary> Mathematics extension methods and other methods </summary>
     public static class Numbers {
 
         static public float Lerp(this float a, float b, float alpha) {
             return a + (b - a) * alpha;
+            
         }
 
         static public float Min(params float[] numbers) {
@@ -35,12 +36,16 @@ namespace Urb.Utilities {
         static public float Max(params float[] numbers) {
             if (numbers.Length == 0) return 0f;
             var localMax = float.MinValue;
-            for(var i = 0; i < numbers.Length; i++) if (numbers[i] < localMax) localMax = numbers[i];
+            for(var i = 0; i < numbers.Length; i++) if (numbers[i] > localMax) localMax = numbers[i];
             return localMax;
         }
 
         static public int Floor(this float source) {
             return (int)SM.Floor(source);
+        }
+
+        static public float Trunc(this float source) {
+            return source - (float)SM.Floor(source);
         }
 
         static public int Ceil(this float source) {
@@ -106,6 +111,29 @@ namespace Urb.Utilities {
             return SM.Sign(value);
         }
 
+        static public int GreatestCommonDenominator(int a, int b) {
+            var g = a % b; 
+            if (g == 0) return b; else return GreatestCommonDenominator(b, g);
+        }
+
+        static public int LeastCommonMultiple(int a, int b) {
+            return (a * b) / (GreatestCommonDenominator(a, b));
+        }
+
+        static public float Approach(this float a, float target, float maxApproach)
+        {
+            float d = (target - a); float v = a;
+            if (SM.Abs(d) < maxApproach) v += d;
+            else v += SM.Sign(d) * maxApproach;
+            return v;
+        }
+
+        static public int Approach(this int a, int target, int maxApproach) {
+            int d = (target - a); int v = a;
+            if (a.Abs() < maxApproach) v += d;
+            else v+= d.Sign() * maxApproach;
+            return v;
+        }
 
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Urb.Utilities;
+using Ur.Utilities;
 
-namespace Urb.Random {
+namespace Ur.Random {
     public class Generator {
         readonly Implementers.MersenneTwister twister;
 

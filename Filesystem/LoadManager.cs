@@ -4,7 +4,11 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace Urb.Filesystem {
+namespace Ur.Filesystem {
+
+    /// <summary> Serves to process loading of various assets. Can have individual files added or entire folders scanned.
+    /// Then it creates corresponding Loader objects, each of which "loads" a single file sequentially. You can supply external
+    /// loader types. </summary>
     public class LoadManager {
 
         #region Fields
@@ -42,7 +46,7 @@ namespace Urb.Filesystem {
         }
 
         public void EnqueueDirectory(string path, bool searchSubfoldersAlso = true) {
-            var assetPath = Folders.GetDirectory("Assets");
+            var assetPath = Folders.GetDirectory(path);
             var dir = new DirectoryInfo(  assetPath );
             var files = dir.EnumerateFiles("*.*", searchSubfoldersAlso ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
             foreach (var file in files) {

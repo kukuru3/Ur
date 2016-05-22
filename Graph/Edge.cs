@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Urb.Utilities;
+using Ur.Utilities;
 
-namespace Urb.Graph {
+namespace Ur.Graph {
     public class Edge : IComparable<Edge> {
                 
         #region Properties

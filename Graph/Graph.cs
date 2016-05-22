@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Urb.Graph {
+namespace Ur.Graph {
     /// <summary> A common bidirectional graph with reasonably optimized management of nodes and edges </summary>
     public class Graph {
 

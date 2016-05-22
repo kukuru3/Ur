@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace Urb.Math {
+namespace Ur.Math {
     public struct Matrix {
     }
 }

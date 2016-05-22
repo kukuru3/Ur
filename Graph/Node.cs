@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Urb.Utilities;
+using Ur.Utilities;
 using System.Linq;
 
-namespace Urb.Graph {
+namespace Ur.Graph {
     public class Node : IComparable<Node> {
 
         #region Fields

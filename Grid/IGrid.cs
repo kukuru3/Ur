@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Urb.Grid {
+namespace Ur.Grid {
     /// <summary> Any 2d grid of type T </summary>
     /// <typeparam name="T">grid tile.</typeparam>
     public interface IGrid<T> : IGrid {

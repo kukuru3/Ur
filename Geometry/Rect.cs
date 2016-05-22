@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Urb.Utilities;
+using Ur.Utilities;
 
-namespace Urb.Geometry {
+namespace Ur.Geometry {
     public struct Rect {
         public float X0 { get; }
         public float Y0 { get; }
@@ -27,7 +27,7 @@ namespace Urb.Geometry {
             return new Rect( X0 - amount, Y0 - amount, X1 + amount, Y1 + amount);
         }
 
-        public bool Contains(Vector coords) {
+        public bool Contains(Vector2 coords) {
             var x = coords.x - X0;
             var y = coords.y - Y0;
             return x >= 0f && x <= W && y >= 0f && y <= H;

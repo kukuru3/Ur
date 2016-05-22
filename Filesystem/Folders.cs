@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Urb.Filesystem {
+namespace Ur.Filesystem {
     static public class Folders {
 
         static private HashSet<string> folderCorrections = new HashSet<string>(new[] {
@@ -16,7 +16,7 @@ namespace Urb.Filesystem {
             }                
             Directory.SetCurrentDirectory(dir.FullName);
         }
-
+        
         static public string GetDirectory(string offsetFromRoot) {
             DoPathsCorrection();
             var path = Path.Combine( Directory.GetCurrentDirectory(), offsetFromRoot);
@@ -25,5 +25,10 @@ namespace Urb.Filesystem {
             return path;
         }
 
+        static public string GetAppDataDirectory() {
+            return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+
+        }
+        
     }
 }
