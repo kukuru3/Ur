@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Ur.Utilities;
 
-namespace Ur.Color {
+namespace Ur.Colors {
 
     public struct Color : IInterpolable<Color>
     {
@@ -50,15 +50,7 @@ namespace Ur.Color {
 
         public static Color White { get { return new Color(1,1,1,1);} }
         public static Color Black { get { return new Color(0,0,0,1);} }
-
-        public Color Lerp(Color b, float t)
-        {
-            return new Color(   Numbers.Lerp(r, b.r, t),
-                                Numbers.Lerp(g, b.g, t),
-                                Numbers.Lerp(this.b, b.b, t),
-                                Numbers.Lerp(a, b.a, t));
-        }
-
+        
         public Color Add(Color other, float multiplier)
         {
             return new Color(r + other.r * multiplier, g + other.g * multiplier, b + other.b * multiplier, a + other.a * multiplier);
@@ -98,6 +90,8 @@ namespace Ur.Color {
             b *= other.b;
         }
 
+        
+
         static public Color operator + (Color a, Color b) {
             return new Color( a.r + b.r, a.g + b.g, a.b + b.b, a.a + b.a); // gesundheit 
         }
@@ -127,6 +121,9 @@ namespace Ur.Color {
             
         }
 
+        public Color Lerp(Color other, float ratio) {
+            return Colors.Lerp(this, other, ratio);
+        }
     }
 
     public interface IInterpolable<T>
