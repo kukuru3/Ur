@@ -4,12 +4,13 @@ using Ur.Utilities;
 
 namespace Ur.Grid {
     [System.Diagnostics.DebuggerDisplay("[{X},{Y}]")]
-    public struct Coords : IEquatable<Coords> {
+    public struct Coords : IEquatable<Coords>, IHasPosition {
 
         private const int HASH_BASE = 67;
 
         public readonly int X;
         public readonly int Y;
+                
         public override int GetHashCode() {
             unchecked { 
                 return (HASH_BASE + Y.GetHashCode()) * HASH_BASE + X.GetHashCode();
@@ -53,6 +54,8 @@ namespace Ur.Grid {
         public Coords Move(int deltaX, int deltaY) {
             return new Coords(this.X + deltaX, this.Y + deltaY);
         }
+
+        Coords IHasPosition.Position { get { return this; } }
 
 
     }

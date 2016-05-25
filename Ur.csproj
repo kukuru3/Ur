@@ -38,7 +38,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\Multidict.cs" />
-    <Compile Include="Color\Color.cs" />
+    <Compile Include="Colors\Color.cs" />
+    <Compile Include="Colors\Colors.cs" />
     <Compile Include="Filesystem\FolderWatcher.cs" />
     <Compile Include="Filesystem\Loader.cs" />
     <Compile Include="Filesystem\LoadManager.cs" />
