@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using crds2 = Ur.Geometry.Vector2;
-using static Ur.Utilities.Numbers;
+using static Ur.Numbers;
 
 namespace Ur.Geometry {
     public static class Curves {

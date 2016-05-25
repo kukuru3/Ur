@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Ur.Utilities;
 
-namespace Ur.Colors {
+namespace Ur {
     static public class Colors {
         static public Color Lerp(this Color a, Color b, float t)
         {

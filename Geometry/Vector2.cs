@@ -1,4 +1,4 @@
-﻿using Ur.Utilities;
+﻿
 
 namespace Ur.Geometry {
     [System.Diagnostics.DebuggerDisplay("[{x} : {y}]")]

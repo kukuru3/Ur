@@ -1,7 +1,6 @@
 ﻿// courtesy of http://freespace.virgin.net/hugo.elias/models/m_perlin.htm
 using System;
 using System.Collections.Generic;
-using Ur.Utilities;
 
 namespace Ur.Random {
     public class PerlinNoise {

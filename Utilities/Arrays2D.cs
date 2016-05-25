@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Ur.Utilities {
+namespace Ur {
     /// <summary> Contains extension methods </summary>
     public static class Arrays2D {
 

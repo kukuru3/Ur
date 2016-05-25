@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Ur.Utilities;
+
 
 namespace Ur.Geometry {
     public struct Rect {
@@ -10,7 +10,7 @@ namespace Ur.Geometry {
         public float H { get; }
         public float X1 { get { return X0 + W;} }
         public float Y1 { get { return Y0 + H; } }
-
+                
         private Rect(float x0, float y0, float x1, float y1) {
             X0 = x0; Y0 = y0; W = x1 - x0; H = y1 - y0;
         }

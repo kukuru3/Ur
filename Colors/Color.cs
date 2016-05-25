@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Ur.Utilities;
 
-namespace Ur.Colors {
+namespace Ur {
 
     public struct Color : IInterpolable<Color>
     {
@@ -50,7 +49,8 @@ namespace Ur.Colors {
 
         public static Color White { get { return new Color(1,1,1,1);} }
         public static Color Black { get { return new Color(0,0,0,1);} }
-        
+        public static Color Transparent { get { return new Color(0,0,0,0); } }
+
         public Color Add(Color other, float multiplier)
         {
             return new Color(r + other.r * multiplier, g + other.g * multiplier, b + other.b * multiplier, a + other.a * multiplier);

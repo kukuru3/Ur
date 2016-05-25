@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Ur.Utilities;
 
 namespace Ur.Geometry {
     public struct Angle {

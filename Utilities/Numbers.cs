@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SM = System.Math;
-namespace Ur.Utilities {
+namespace Ur {
     /// <summary> Mathematics extension methods and other methods </summary>
     public static class Numbers {
 

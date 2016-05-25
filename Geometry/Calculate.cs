@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Ur.Utilities;
 using System.Linq;
 
 namespace Ur.Geometry {
@@ -29,7 +28,7 @@ namespace Ur.Geometry {
                 if (point.x < minX) minX = point.x; if (point.x > maxX) maxX = point.x;
                 if (point.y < minY) minY = point.y; if (point.y > maxY) maxY = point.y;
             }
-            return new Rect(minX, minY, maxX, maxY);
+            return Rect.FromBounds(minX, minY, maxX, maxY);
 
         }
 
