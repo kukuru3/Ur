@@ -126,5 +126,10 @@ namespace Ur.Geometry {
             }
             return false;
         }
+
+        static public float Cosine(this Angle a) {return a.Cos; }
+        static public float Sine  (this Angle a) {return a.Sin; }
+
+        public static float Tangens(this Angle a) { return a.Sin / a.Cos; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Ur.Utilities;
+﻿using System;
+using Ur.Utilities;
 
 namespace Ur.Geometry {
     [System.Diagnostics.DebuggerDisplay("{Print}")]
@@ -49,5 +50,10 @@ namespace Ur.Geometry {
         public override int GetHashCode() => x.GetHashCode() ^ (y+31f).GetHashCode() ^(z+31f*37f).GetHashCode();
         public string Print => $"[{x.ToString("F")},{y.ToString("F")},{z.ToString("F")}]";
         public override string ToString() => Print;
+
+        public Vector2 Flatten { get {
+            return new Vector2(x, y);
+        } }
+        
     }
 }

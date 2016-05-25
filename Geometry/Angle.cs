@@ -26,6 +26,10 @@ namespace Ur.Geometry {
             return new Angle((float)(System.Math.Atan(dy / dx) * Rad2Deg) + 180.0f);
         }
 
+        public static object FromDelta(object flatten1, object flatten2) {
+            throw new NotImplementedException();
+        }
+
         static public implicit operator Angle(float source) {
             return new Angle(source);
         }

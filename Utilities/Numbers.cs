@@ -79,7 +79,7 @@ namespace Ur.Utilities {
             return value;            
         }
 
-        static public float Choke(this float value, float min, float max) {
+        static public float Choke(this float value, float min = 0f, float max = 1f) {
             if (value < min) return min;
             if (value > max) return max;
             return value;            

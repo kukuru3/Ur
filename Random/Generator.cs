@@ -17,6 +17,7 @@ namespace Ur.Random {
             for (var i = 0; i < 10; i++) arr[i] = systemRand.Next();
             twister = new Implementers.MersenneTwister(intsToUlongs(arr));
         }
+
         
         public Generator(params int[] seed) {
             twister = new Implementers.MersenneTwister(intsToUlongs(seed));
@@ -43,6 +44,11 @@ namespace Ur.Random {
         public int Next(int min, int max) {
             return min + twister.genrand_N(max - min + 1);
         }
+
+        public int NextInt() {
+            return twister.genrand_N(int.MaxValue);
+        }
+
 
         public float Next(float min, float max) {            
             return min + (max - min) * (float)twister.RandomDouble();
