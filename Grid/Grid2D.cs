@@ -65,7 +65,7 @@ namespace Ur.Grid {
             return x >= 0 && y >= 0 && x < W && y < H;
         }
 
-        public IEnumerable<T> GetAll() {
+        public IEnumerable<T> GetAllTiles() {
             foreach (var t in tiles) yield return t;
         }
                

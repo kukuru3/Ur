@@ -6,7 +6,7 @@ namespace Ur.Filesystem {
     [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
     public class FolderWatcher
     {
-        // interface with the class through these properties : 
+         
         public FolderWatcher(string folderPath, string fileMask, bool watchSubfolders, Action<string> callback)
         {
             var di = new DirectoryInfo(folderPath);

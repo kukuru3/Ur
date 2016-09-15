@@ -90,13 +90,15 @@ namespace Ur {
             b *= other.b;
         }
 
-        
-
         static public Color operator + (Color a, Color b) {
             return new Color( a.r + b.r, a.g + b.g, a.b + b.b, a.a + b.a); // gesundheit 
         }
         static public Color operator - (Color a, Color b) {
             return new Color( a.r - b.r, a.g - b.g, a.b - b.b, a.a - b.a); // gesundheit 
+        }
+
+        static public Color operator * (Color ca, float cb) {
+            return new Color(ca.r * cb, ca.g * cb, ca.b * cb, ca.a);
         }
 
         public static Color FromHSV(float h, float s, float v)

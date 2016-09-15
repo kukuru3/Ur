@@ -38,7 +38,9 @@ namespace Ur.Geometry {
             return Calculate.AABB(Vertices);
         } }
 
+        
         public Vector2 Centroid { get {
+                            
             var n = Vertices.Length;
             float sum = 0f;
             for (var i = 0; i < n; i++) { var j = i + 1; if (j == n) j = 0;                

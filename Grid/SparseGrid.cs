@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Ur.Grid {
     /// <summary> Tiles are added and removed haphazardly in this class, and there are no bounds limits (0 is not lowest)</summary>
     /// <typeparam name="T">Type of grid tile</typeparam>
-    public class SparseGrid<T> : IGrid {
+    public class SparseGrid<T> : IGrid<T> {
       
         #region Field
         private Dictionary<Coords, T> backingCollection;
@@ -34,12 +34,15 @@ namespace Ur.Grid {
 
         #region Value access - publicly exposed
        
+        public T this[int x, int y] => GetTile(x, y);
+        public IEnumerable<T> GetAllTiles() => backingCollection.Values;
+        
         public T GetTile(int x, int y) {
             T val;
             backingCollection.TryGetValue(new Coords(x, y), out val);
             return val;
         }
-
+        
         public T GetTile(Coords crds) {
             T val;
             backingCollection.TryGetValue(crds, out val);
@@ -50,10 +53,7 @@ namespace Ur.Grid {
             return backingCollection.ContainsKey(new Coords(x, y));
         } 
 
-        public IEnumerable<T> GetAllTiles() {
-            return backingCollection.Values;
-        }
-
+       
         #endregion
 
         #region Bounds getters - publicly exposed
@@ -67,8 +67,9 @@ namespace Ur.Grid {
         int IGrid.W { get { return BoundingBox.Width; } }
 
         int IGrid.H { get { return BoundingBox.Height; } }
-        #endregion
-        
+
+       #endregion
+
         #region Maintain and compute bounding box
 
         private Rect boundingBox;
@@ -84,6 +85,8 @@ namespace Ur.Grid {
             }
             boundingBox = Rect.FromBounds(minX, maxX, minY, maxY);
         }
+
+        
 
         #endregion
 

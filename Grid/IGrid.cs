@@ -6,7 +6,7 @@ namespace Ur.Grid {
     /// <typeparam name="T">grid tile.</typeparam>
     public interface IGrid<T> : IGrid {
         T this[int x, int y] { get; }
-        IEnumerable<T> GetAll();
+        IEnumerable<T> GetAllTiles();
     }
 
     /// <summary> A generic grid interface </summary>

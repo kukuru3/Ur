@@ -68,10 +68,15 @@ namespace Ur.Collections {
             lists.Clear();
             cache.Clear();
         }
+
+        public IEnumerable<TKey> AllKeys() {
+            foreach (var item in lists) yield return item.Key;
+        }
         
         public IEnumerable<TValue> AllValues() {
             foreach (var list in cache.Values) foreach (var item in list ) yield return item;
         }
+        
 
     }
 }

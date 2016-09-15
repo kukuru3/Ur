@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
 namespace Ur.Filesystem {
@@ -48,10 +46,15 @@ namespace Ur.Filesystem {
         public void EnqueueDirectory(string path, bool searchSubfoldersAlso = true) {
             var assetPath = Folders.GetDirectory(path);
             var dir = new DirectoryInfo(  assetPath );
+
+            #if DOTNET_35
+            throw new NotImplementedException();
+            #else
             var files = dir.EnumerateFiles("*.*", searchSubfoldersAlso ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
             foreach (var file in files) {
                 EnqueueFile(file.FullName);
             }
+            #endif
         }
 
         public void Execute() {
@@ -59,7 +62,7 @@ namespace Ur.Filesystem {
         }
 
         void ThreadingWrapper(object obj) {
-            var a = obj;
+            
             while(itemsPending.Count > 0) {
                 LoadNext();
                 System.Threading.Thread.Sleep(1);
