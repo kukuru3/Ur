@@ -1,4 +1,5 @@
-﻿using System;
+﻿//#define DOTNET_35
+using System;
 using System.Collections.Generic;
 
 namespace Ur.Graph {

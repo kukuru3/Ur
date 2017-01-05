@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -23,8 +24,8 @@ namespace Ur.Filesystem {
             registeredLoaderClasses = new Dictionary<string, Type>();
         }
 
-        public int NumOfProcessedItems  { get { throw new NotImplementedException(); } }
-        public int NumOfPendingItems    { get { throw new NotImplementedException(); } }
+        public int NumOfProcessedItems  => itemsCompleted.Count;
+        public int NumOfPendingItems    => itemsPending.Count;
 
         public void RegisterLoader(Type classType, params string[] extensions) {
             foreach (var ext in extensions) {
@@ -44,9 +45,10 @@ namespace Ur.Filesystem {
         }
 
         public void EnqueueDirectory(string path, bool searchSubfoldersAlso = true) {
+            
             var assetPath = Folders.GetDirectory(path);
-            var dir = new DirectoryInfo(  assetPath );
-
+            var dir = new DirectoryInfo(assetPath);
+            
             #if DOTNET_35
             throw new NotImplementedException();
             #else

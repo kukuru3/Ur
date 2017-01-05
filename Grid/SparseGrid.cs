@@ -35,6 +35,7 @@ namespace Ur.Grid {
         #region Value access - publicly exposed
        
         public T this[int x, int y] => GetTile(x, y);
+        public T this[Coords c]     => GetTile(c);
         public IEnumerable<T> GetAllTiles() => backingCollection.Values;
         
         public T GetTile(int x, int y) {

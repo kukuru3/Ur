@@ -6,7 +6,7 @@ namespace Ur.Filesystem {
     static public class Folders {
 
         static private HashSet<string> folderCorrections = new HashSet<string>(new[] {
-            "Release", "Debug", "Build", "x86", "x64", "bin"
+            "Release", "Debug", "Debug32", "Release32", "Debug64", "Release64", "Build", "x86", "x64", "bin"
         });
 
         static private void DoPathsCorrection() {
@@ -17,11 +17,19 @@ namespace Ur.Filesystem {
             Directory.SetCurrentDirectory(dir.FullName);
         }
         
-        static public string GetDirectory(string offsetFromRoot) {
-            DoPathsCorrection();
-            var path = Path.Combine( Directory.GetCurrentDirectory(), offsetFromRoot);
+
+        /// <param name="relativeOrAbsolutePath"></param>
+        static public string GetDirectory(string relativeOrAbsolutePath) {
+            string path;
+            if (Path.IsPathRooted(relativeOrAbsolutePath)) {
+                path = relativeOrAbsolutePath;
+            } else {
+                DoPathsCorrection();
+                path = Path.Combine( Directory.GetCurrentDirectory(), relativeOrAbsolutePath);
+            }
+            
             var di = new DirectoryInfo(path);
-            if (!di.Exists) throw new DirectoryNotFoundException(offsetFromRoot);
+            if (!di.Exists) throw new DirectoryNotFoundException(relativeOrAbsolutePath);
             return path;
         }
 

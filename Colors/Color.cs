@@ -46,7 +46,7 @@ namespace Ur {
             return FromUnsignedInteger(input);
         }
 
-
+        
         public static Color White { get { return new Color(1,1,1,1);} }
         public static Color Black { get { return new Color(0,0,0,1);} }
         public static Color Transparent { get { return new Color(0,0,0,0); } }
@@ -62,6 +62,14 @@ namespace Ur {
             r = r.Choke(0f, 1f);
             g = g.Choke(0f, 1f);
             b = b.Choke(0f, 1f);
+        }
+
+        public bool IsNonZero() {
+            return 
+                r > float.Epsilon || 
+                g > float.Epsilon ||
+                b > float.Epsilon
+            ;
         }
 
         public Color ToBrightness(float brightness) {
