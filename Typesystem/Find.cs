@@ -6,22 +6,37 @@ namespace Ur.Typesystem {
 
     public class Finder {
 
-        List<Assembly> assemblies;
-        
-        public Finder(IEnumerable<Assembly> assemblies = null) {
-            if (assemblies == null ) assemblies = AppDomain.CurrentDomain.GetAssemblies();
+        #region Fields
+        List<Assembly> assemblies; 
+        #endregion
+
+        #region Factories
+        static public Finder FromAllAssemblies() {
+            return new Finder(AppDomain.CurrentDomain.GetAssemblies());
+        }
+
+        static public Finder FromAssemblies(IEnumerable<Assembly> assemblies) {
+            return new Finder(assemblies);
+        } 
+        #endregion
+
+        private Finder(IEnumerable<Assembly> assemblies ) {           
             this.assemblies = new List<Assembly>(assemblies);            
+        }
+
+        public IEnumerable<Type> ImplementingTypes(Type tt) {
+            var l = new List<Type>();
+            foreach (var ass in this.assemblies) 
+                foreach (var type in ass.GetTypes()) 
+                    if (!type.IsAbstract)
+                        if (tt.IsAssignableFrom(type))
+                            l.Add(type);
+            return l;
         }
         
         public IEnumerable<Type> ImplementingTypes<T>() where T : class {
-
-            var l = new List<Type>();
             var tt = typeof(T);
-            foreach (var ass in this.assemblies) 
-                foreach (var type in ass.GetTypes()) 
-                    if (!type.IsAbstract) if (tt.IsAssignableFrom(type))  l.Add(type);                        
-            return l;
-            
+            return ImplementingTypes(tt);            
         }
 
         public Dictionary<T, Type> GetTypesWithAttribute<T>() where T : Attribute {

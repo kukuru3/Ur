@@ -31,8 +31,8 @@ namespace Ur.Geometry {
             return new Rect(                
                 coords.x - halfw,
                 coords.y - halfh,
-                2 * halfw, 
-                2 * halfh
+                coords.x + 2 * halfw, 
+                coords.y + 2 * halfh
             );
             
         }

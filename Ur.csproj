@@ -15,7 +15,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\Build\Debug32\</OutputPath>
+    <OutputPath>..\..\Build\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -25,7 +25,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\Build\Release32\</OutputPath>
+    <OutputPath>..\..\Build\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>full</DebugType>
@@ -60,9 +60,10 @@
     <Compile Include="Collections\Multidict.cs" />
     <Compile Include="Colors\Color.cs" />
     <Compile Include="Colors\Colors.cs" />
+    <Compile Include="Filesystem\FileFinder.cs" />
     <Compile Include="Filesystem\FolderWatcher.cs" />
     <Compile Include="Filesystem\Loader.cs" />
-    <Compile Include="Filesystem\LoadManager.cs" />
+    <Compile Include="Filesystem\LoadingQueue.cs" />
     <Compile Include="Filesystem\LoaderDeclarations.cs" />
     <Compile Include="Filesystem\Folders.cs" />
     <Compile Include="Geometry\Calculate.cs" />
@@ -87,6 +88,8 @@
     <Compile Include="Random\PerlinNoise.cs" />
     <Compile Include="Typesystem\Find.cs" />
     <Compile Include="Typesystem\ITypeConverter.cs" />
+    <Compile Include="Utilities\Enums.cs" />
+    <Compile Include="Utilities\Log.cs" />
     <Compile Include="Utilities\Numbers.cs" />
     <Compile Include="Random\Generator.cs" />
     <Compile Include="Random\Implementers\MersenneTwister.cs" />

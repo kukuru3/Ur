@@ -17,6 +17,8 @@ namespace Ur.Grid {
         public int Width { get { return X1 - X0 + 1;} }
         public int Height { get { return Y1 - Y0 + 1; } }
 
+        public Coords Center => new Coords( (X0 + X1) / 2, (Y0 + Y1) / 2);
+
         public Rect(Coords lowest, Coords dimension) {
             X0 = lowest.X; Y0 = lowest.Y;
             X1 = X0 + dimension.X - 1;

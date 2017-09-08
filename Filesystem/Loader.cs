@@ -3,10 +3,13 @@ using System.Collections.Generic;
 
 namespace Ur.Filesystem {
     
+    /// <summary> A single LOADER is an instantiated object that is associated with a single file that needs to be loaded
+    /// The instantiation of loaders is done via a load manager.</summary>
     public abstract class Loader {
 
-        #region Fields
+        #region Properties
         
+        public string       BasePath { get; set; }
         public string       Path  { get; }
         public LoadStates   State { get; private set; }
         public int          Bulk  { get; protected set; }
@@ -43,10 +46,17 @@ namespace Ur.Filesystem {
         public Loader(string path) {
             Path = path;
             Bulk = 100;
-            State = LoadStates.Pending;
+            State = LoadStates.Pending;                                       
         }
 
         protected abstract void Load();
 
+        public object LoadedAssetItem { get; protected set; }
+
+    }
+    public abstract class Loader<T> : Loader {
+        public Loader(string path) : base(path) { }        
+        public T LoadedItem => (T)base.LoadedAssetItem;
     }
 }
+        

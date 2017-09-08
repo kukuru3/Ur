@@ -76,7 +76,7 @@ namespace Ur.Graph {
         }
 #endregion
 
-#region Node and edge access
+        #region Node and edge access
         public IEnumerable<Node> AllNodes {
             get {
                 #if DOTNET_35

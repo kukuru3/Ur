@@ -8,7 +8,7 @@ namespace Ur.Filesystem {
     /// <summary> Serves to process loading of various assets. Can have individual files added or entire folders scanned.
     /// Then it creates corresponding Loader objects, each of which "loads" a single file sequentially. You can supply external
     /// loader types. </summary>
-    public class LoadManager {
+    public class LoadingQueue {
 
         #region Fields
         Dictionary<string, Type> registeredLoaderClasses;
@@ -17,7 +17,7 @@ namespace Ur.Filesystem {
         List<Loader> itemsFailed;
         #endregion
 
-        public LoadManager() {
+        public LoadingQueue() {
             itemsPending    = new Queue<Loader>();
             itemsCompleted  = new List<Loader>();
             itemsFailed     = new List<Loader>();
@@ -27,6 +27,8 @@ namespace Ur.Filesystem {
         public int NumOfProcessedItems  => itemsCompleted.Count;
         public int NumOfPendingItems    => itemsPending.Count;
 
+        /// <summary> The way it works is, you instantiate the LoadManager, preregister any loaders preferred for 
+        /// various file types (identified by extension), and then execute. </summary>
         public void RegisterLoader(Type classType, params string[] extensions) {
             foreach (var ext in extensions) {
                 registeredLoaderClasses[ext] = classType;
@@ -38,17 +40,22 @@ namespace Ur.Filesystem {
             if (!fi.Exists) fi = new FileInfo(Directory.GetCurrentDirectory() + "\\" + path); // not sure if supported by default???
             if (!fi.Exists) throw new LoaderException(null, "Cannot load nonexistent file: " + path);
             var loader = GetLoaderInstance(fi.FullName);
-            if (loader != null) {
+            if (loader != null) {                
+                loader.BasePath = lastBasePath;
                 itemsPending.Enqueue(loader);
             }
-
         }
+
+        string lastBasePath = "";
 
         public void EnqueueDirectory(string path, bool searchSubfoldersAlso = true) {
             
             var assetPath = Folders.GetDirectory(path);
-            var dir = new DirectoryInfo(assetPath);
             
+            var dir = new DirectoryInfo(assetPath);
+
+            lastBasePath = dir.FullName;
+
             #if DOTNET_35
             throw new NotImplementedException();
             #else
@@ -79,17 +86,20 @@ namespace Ur.Filesystem {
             }
         }
 
+        /// <summary> An event triggered when loading updates</summary>
         public event LoaderEvent LoadingUpdate;
+
         public event Action       AllTasksComplete;
         
         private void FileUpdated(LoaderEventArgs e) {            
 
             switch (e.State) {
-                case LoadStates.Completed: itemsCompleted.Add(e.Sender); CheckForCompletion(); break;
-                case LoadStates.Failure:   itemsFailed.Add(e.Sender);    CheckForCompletion();break;
+                case LoadStates.Completed: itemsCompleted.Add(e.Sender);  break;
+                case LoadStates.Failure:   itemsFailed.Add(e.Sender);     break;
             }
 
             LoadingUpdate?.Invoke(e);
+            if (e.State == LoadStates.Completed || e.State == LoadStates.Failure) CheckForCompletion();
         }
 
         void CheckForCompletion() {
