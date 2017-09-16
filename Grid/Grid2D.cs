@@ -16,17 +16,8 @@ namespace Ur.Grid {
         public int W { get; }
         public int H { get; }
 
-        int IGrid.W {
-            get {
-                throw new NotImplementedException();
-            }
-        }
-
-        int IGrid.H {
-            get {
-                throw new NotImplementedException();
-            }
-        }
+        int IGrid.W => W;
+        int IGrid.H => H;
 
         T IGrid<T>.this[int x, int y] {
             get {

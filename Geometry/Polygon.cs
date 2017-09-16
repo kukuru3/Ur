@@ -24,7 +24,14 @@ namespace Ur.Geometry {
         }
 
         public float Surface { get {
-            throw new NotImplementedException();
+            var n = Vertices.Length;
+            float sum = 0f;
+            for (var i = 0; i < n; i++) {
+                var j = i + 1; if (j == n) j = 0;
+                sum += this[i].x * this[j].y - this[j].x * this[i].y;
+            }
+            var surface = sum / 2;
+            return surface;
         } }
 
         public Vector2 Average { get {
@@ -41,21 +48,15 @@ namespace Ur.Geometry {
         
         public Vector2 Centroid { get {
                             
+            var surface = Surface;            
             var n = Vertices.Length;
-            float sum = 0f;
-            for (var i = 0; i < n; i++) { var j = i + 1; if (j == n) j = 0;                
-                sum += this[i].x * this[j].y - this[j].x * this[i].y;
-            }
-            var surface = sum / 2;
             float x = 0; float y = 0;
             for (var i = 0; i < n; i++) { var j = i + 1; if (j == n) j = 0;
                 float ix = this[i].x, iy = this[i].y, jx = this[j].x, jy = this[j].y;
                 var k = ix * jy - jx * iy;
                 x += (ix + jx) * k;
-                y += (iy + jy) * k;
-                
+                y += (iy + jy) * k;                
             }
-
             x /= 6 * surface;
             y /= 6 * surface;
             return new Vector2(x, y);

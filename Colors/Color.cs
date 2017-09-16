@@ -25,20 +25,21 @@ namespace Ur {
             var a = ((col & 0xff000000) >> 24);
             if (a == 0) a = 255;
             return new Color(
-                inv256 * ((col & 0x00ff0000) >> 16),
-                inv256 * ((col & 0x0000ff00) >> 8),
-                inv256 * ((col & 0x000000ff) >> 0),
+                inv256 * ((col & 0x00ff0000) >> 24),
+                inv256 * ((col & 0x0000ff00) >> 16),
+                inv256 * ((col & 0x000000ff) >> 8),
                 inv256 * (a)
             );
         }
 
         public static uint ToUnsignedInteger(Color c)
         { 
+
             
-            return ((uint)Numbers.Floor(255f * c.r.Choke(0f, 1f)) << 16) |
-                   ((uint)Numbers.Floor(255f * c.g.Choke(0f, 1f)) << 8 ) |
-                   ((uint)Numbers.Floor(255f * c.b.Choke(0f, 1f)) << 0 ) |
-                   ((uint)Numbers.Floor(255f * c.a.Choke(0f, 1f)) << 24);
+            return ((uint)Numbers.Floor(255f * c.r.Choke(0f, 1f)) << 24) |
+                   ((uint)Numbers.Floor(255f * c.g.Choke(0f, 1f)) << 16) |
+                   ((uint)Numbers.Floor(255f * c.b.Choke(0f, 1f)) << 8 ) |
+                   ((uint)Numbers.Floor(255f * c.a.Choke(0f, 1f)) << 0);
         }
 
         public static implicit operator Color(uint input)

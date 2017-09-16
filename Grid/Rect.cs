@@ -10,13 +10,11 @@ namespace Ur.Grid {
         public readonly int X1;
         public readonly int Y1;
 
-        public Coords BoundsLow { get { return new Coords(X0, Y0); } }
-        public Coords BoundsHigh { get {  return new Coords(X1, Y1); } }
-        public Coords Dimension { get {  return new Coords(Width, Height); } }
-
-        public int Width { get { return X1 - X0 + 1;} }
-        public int Height { get { return Y1 - Y0 + 1; } }
-
+        public Coords BoundsLow => new Coords(X0, Y0);
+        public Coords BoundsHigh => new Coords(X1, Y1);
+        public Coords Dimension => new Coords(Width, Height);
+        public int Width => X1 - X0 + 1;
+        public int Height => Y1 - Y0 + 1;
         public Coords Center => new Coords( (X0 + X1) / 2, (Y0 + Y1) / 2);
 
         public Rect(Coords lowest, Coords dimension) {
@@ -36,13 +34,10 @@ namespace Ur.Grid {
         }
 
         /// <summary> Return true if coordinates supplied fall within this rect. </summary>        
-        public bool Contains(Coords crds) {
-            return crds.X >= X0 && crds.X <= X1 && crds.Y >= Y0 && crds.Y <= Y1;
-        }
-
-        public bool Contains (int x, int y) {
-            return x >= X0 && x <= X1 && y >= Y0 && y <= Y1;
-        }
+        public bool Contains(Coords crds) => crds.X >= X0 && crds.X <= X1 && crds.Y >= Y0 && crds.Y <= Y1;
+        
+        public bool Contains (int x, int y) => x >= X0 && x <= X1 && y >= Y0 && y <= Y1;
+        
         public Rect OffsetBy(int x, int y) {
             return new Rect(X0 + x, Y0 + y, Width, Height );
         }

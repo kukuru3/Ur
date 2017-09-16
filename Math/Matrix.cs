@@ -58,7 +58,7 @@ namespace Ur.Math {
 
         public Matrix Inversed3x3 { get
         {
-            if (W != 3 || H != 3) throw new System.Exception("Improper inverse called");
+            if (W != 3 || H != 3) throw new System.InvalidOperationException("Improper inverse called");
 
             float a = this[1, 1], b = this[2, 1], c = this[3, 1];
             float d = this[1, 2], e = this[2, 2], f = this[3, 2];
@@ -126,7 +126,7 @@ namespace Ur.Math {
         /// <summary> Multiplies a matrix with another matrix WITHOUT creating a new reference. </summary>
         /// <param name="b">the other matrix</param>
         /// <remarks> Only valid if both matrices are square, and have the same dimensions</remarks>
-        public void multiplyBy(Matrix b) {            
+        public void MultiplyBy(Matrix b) {            
             //if (!(b.width == width && b.height == height && width == height)) throw new System.Exception("Could not fast-multiply 2 heterogenous matrices");
             var d = W;
             var results = new float[b.W, H];
@@ -139,7 +139,7 @@ namespace Ur.Math {
             this.values = results;
         }
 
-        public void become(Matrix b) {
+        public void Become(Matrix b) {
             values = new float[b.W, b.H];
             for (int y = 0; y < b.H; y++) 
             for (int x = 0; x < b.W; x++) {

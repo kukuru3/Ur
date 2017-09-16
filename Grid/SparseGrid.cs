@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Linq;
 namespace Ur.Grid {
     /// <summary> Tiles are added and removed haphazardly in this class, and there are no bounds limits (0 is not lowest)</summary>
     /// <typeparam name="T">Type of grid tile</typeparam>
-    public class SparseGrid<T> : IGrid<T> {
+    public class SparseGrid<T> : IGrid<T> where T : IHasPosition {
       
         #region Field
         private Dictionary<Coords, T> backingCollection;
@@ -14,18 +14,28 @@ namespace Ur.Grid {
             backingCollection = new Dictionary<Coords, T>();
         }
 
-        public void AddItem(T item, int atX, int atY) {
-            var key = new Coords(atX, atY);
-            backingCollection[key] = item;
-            if (!invalidateBoundingBox && !BoundingBox.Contains(key)) invalidateBoundingBox = true;            
-        }
-
-        public void RemoveItem(int atX, int atY) {
-            var key = new Coords(atX, atY);
-            backingCollection.Remove(key);
+        public virtual void AddItems(IEnumerable<T> items) {
+            foreach (var item in items) backingCollection[item.Position] = item;
             invalidateBoundingBox = true;
-
         }
+
+        public virtual void RemoveItems(IEnumerable<T> items) {
+            foreach (var item in items) backingCollection.Remove(item.Position);
+            invalidateBoundingBox = true;
+        }
+
+        //public void AddItem(T item, int atX, int atY) {            
+        //    var key = new Coords(atX, atY);
+        //    backingCollection[key] = item;
+        //    if (!invalidateBoundingBox && !BoundingBox.Contains(key)) invalidateBoundingBox = true;            
+        //}
+
+        //public void RemoveItem(int atX, int atY) {
+        //    var key = new Coords(atX, atY);
+        //    backingCollection.Remove(key);
+        //    invalidateBoundingBox = true;
+
+        //}
 
         public void Clear() {
             backingCollection.Clear();
@@ -39,14 +49,12 @@ namespace Ur.Grid {
         public IEnumerable<T> GetAllTiles() => backingCollection.Values;
         
         public T GetTile(int x, int y) {
-            T val;
-            backingCollection.TryGetValue(new Coords(x, y), out val);
+            backingCollection.TryGetValue(new Coords(x, y), out T val);
             return val;
         }
         
         public T GetTile(Coords crds) {
-            T val;
-            backingCollection.TryGetValue(crds, out val);
+            backingCollection.TryGetValue(crds, out T val);
             return val;
         }
 
@@ -65,11 +73,13 @@ namespace Ur.Grid {
         } }
 
         
-        int IGrid.W { get { return BoundingBox.Width; } }
+        int IGrid.W => BoundingBox.Width;
+        int IGrid.H => BoundingBox.Height;
+        
+        #endregion
 
-        int IGrid.H { get { return BoundingBox.Height; } }
-
-       #endregion
+        protected int W => BoundingBox.Width;
+        protected int H => BoundingBox.Height;
 
         #region Maintain and compute bounding box
 

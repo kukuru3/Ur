@@ -109,9 +109,8 @@ namespace Ur.Filesystem {
         }
         
         Loader GetLoaderInstance(string path) {
-            Type t;
             var ext = Path.GetExtension(path).Substring(1);
-            if (registeredLoaderClasses.TryGetValue(ext, out t)) {
+            if (registeredLoaderClasses.TryGetValue(ext, out Type t)) {
                 var l = Activator.CreateInstance(t, path) as Loader;
                 return l;
             } else {
