@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\Multidict.cs" />
+    <Compile Include="Collections\Tree.cs" />
     <Compile Include="Colors\Color.cs" />
     <Compile Include="Colors\Colors.cs" />
     <Compile Include="Filesystem\FileFinder.cs" />

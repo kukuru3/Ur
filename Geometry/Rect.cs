@@ -46,6 +46,10 @@ namespace Ur.Geometry {
             );
         }
 
+        //public Rect Intersect(Rect a, Rect b) {
+
+        //}
+
         public Rect Expand(float amount) {
             return new Rect( X0 - amount, Y0 - amount, X1 + amount, Y1 + amount);
         }
