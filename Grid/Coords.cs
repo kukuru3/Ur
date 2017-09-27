@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Ur.Geometry;
 
 namespace Ur.Grid {
     [System.Diagnostics.DebuggerDisplay("[{X},{Y}]")]
@@ -9,7 +10,8 @@ namespace Ur.Grid {
 
         public readonly int X;
         public readonly int Y;
-                
+
+        
         public override int GetHashCode() {
             unchecked { 
                 return (HASH_BASE + Y.GetHashCode()) * HASH_BASE + X.GetHashCode();
@@ -39,6 +41,10 @@ namespace Ur.Grid {
         public static int ManhattanDistance(Coords a, Coords b) {
             var dx = Numbers.Abs(a.X - b.X); var dy = Numbers.Abs(a.Y - b.Y);
             return dx + dy;
+        }
+
+        public Vector2 ToFloat() {
+            return new Vector2(X, Y);
         }
 
         public bool Equals(Coords other) { return this == other; }

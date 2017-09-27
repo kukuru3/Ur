@@ -10,6 +10,9 @@ namespace Ur.Collections {
     }
 
 
+    /// <summary> Is it efficient? Not really. Is it ubiquitous? Nah.
+    /// Does it even make sense to have a generic all-purpose tree class? Of course not</summary>
+    /// <typeparam name="T"></typeparam>
     public class Tree<T> where T : class {
 
         #region Fields
