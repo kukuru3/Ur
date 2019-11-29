@@ -13,6 +13,7 @@ namespace Ur.Graph {
         #region Properties
         public int Index { get; }
         public Graph Graph { get; } 
+        public object Metadata { get; set; }
         #endregion
 
         public Node(Graph graph) {

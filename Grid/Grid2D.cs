@@ -13,43 +13,32 @@ namespace Ur.Grid {
         #endregion
 
         #region Properties
-        public int W { get; }
-        public int H { get; }
+        public int W { get; private set; }
+        public int H { get; private set; }
 
         int IGrid.W => W;
         int IGrid.H => H;
 
-        T IGrid<T>.this[int x, int y] {
-            get {
-                throw new NotImplementedException();
-            }
-        }
+        public T this[int x, int y] => HasTile(x,y) ? tiles[x, y] : default(T);
 
-        public T this[int x, int y] {
-            get {
-                if (!HasTile(x, y)) return default(T);
-                return tiles[x, y];
-            }
-        }
         #endregion
 
         #region Constructors
-        public Grid2D(int w, int h) {
+
+        public void Initialize(int w, int h) {
+            if (tiles != null) throw new ArgumentException("Grid Already Initialized!");
             W = w; H = h;
-            tiles = new T[W, H];
+            tiles = new T[w, h];
         }
 
-        public Grid2D(int w, int h, Simple2DConstructor<T> c) : this(w, h) {
-            foreach (var tile in tiles.Iterate()) tiles[tile.X, tile.Y] = c(tile.X, tile.Y);            
+        public void CreateTiles(Simple2DConstructor<T> c) {
+            foreach (var tile in tiles.Iterate()) tiles[tile.X, tile.Y] = c(tile.X, tile.Y);
         }
 
-        /// <summary> Careful, will retain the reference to the array</summary>        
-        public Grid2D(T[,] sourceValues) {
-            if (sourceValues == null) throw new ArgumentNullException("Grid must have a source array in this constructor");
-            W = sourceValues.GetLength(0);
-            H = sourceValues.GetLength(1);
-            tiles = sourceValues;
-        } 
+        public void FillTiles(T[,] source) {
+            tiles = source ?? throw new ArgumentNullException("tiles must be provided");
+        }
+
         #endregion
 
         public bool HasTile(int x, int y) {

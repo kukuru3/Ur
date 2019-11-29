@@ -9,11 +9,11 @@ namespace Ur.Filesystem {
             "Release", "Debug", "Debug32", "Release32", "Debug64", "Release64", "Build", "x86", "x64", "bin"
         });
 
-        static private void DoPathsCorrection() {
+        static private void DoPathsCorrection(string[] additions = null) {
             var dir =  new DirectoryInfo( Directory.GetCurrentDirectory());
             while( folderCorrections.Contains(dir.Name) ) {
                 dir = dir.Parent;
-            }                
+            }
             Directory.SetCurrentDirectory(dir.FullName);
         }
         

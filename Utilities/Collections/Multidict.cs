@@ -19,7 +19,7 @@ namespace Ur.Collections {
         List<TValue> GetList(TKey key, bool create = false) {
             List<TValue> result = null;
             if (!lists.TryGetValue(key, out result) && create) result = lists[key] = new List<TValue>();
-            return result;            
+            return result;
         }
         
         TValue[] GetFromCache(TKey key) {

@@ -9,6 +9,7 @@ namespace Ur.Graph {
         public Node B { get; }
         public int Index { get; }
         public Graph Graph { get { return A.Graph; } }
+        public object Metadata { get; set; }
         #endregion
 
         #region Public methods

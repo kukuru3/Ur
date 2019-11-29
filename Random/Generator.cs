@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace Ur.Random {
-    public class Generator {
+    public class Generator : IRng {
         readonly Implementers.MersenneTwister twister;
 
         #region Constructors
@@ -47,8 +47,7 @@ namespace Ur.Random {
         public int NextInt() {
             return twister.genrand_N(int.MaxValue);
         }
-
-
+     
         public float Next(float min, float max) {            
             return min + (max - min) * (float)twister.RandomDouble();
         }
@@ -76,17 +75,6 @@ namespace Ur.Random {
         public float NextGaussian(float mean, float sigma) {
             return mean + BoxMuller() * sigma;
         }
-        
-        private float RatioOfUniforms() {
-            while(true) {
-                var u1 = Next(0f, 1f);
-                var v2 = Next(0f, 1f);
-                var u2 = (2 * v2 - 1f) * System.Math.Sqrt(2 / System.Math.E );
-                if (u1 * u1 <=  System.Math.Exp( u2 * u2 / (u1 * u1 * -2 ))) {
-                    return (float)(u2 / u1);
-                }
-            }
-        }
 
         /// <summary> Since Box-Muller generates 2 independent uniform variables during execution, we can save 1 for the next call.</summary>
         private float? boxMullerSpare;
@@ -108,6 +96,5 @@ namespace Ur.Random {
             boxMullerSpare = x * fac;
             return y * fac;
         }
-
     }
 }

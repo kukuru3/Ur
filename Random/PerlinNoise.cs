@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 namespace Ur.Random {
     public class PerlinNoise {
-
         Generator rng;
         
         float[,] bank;

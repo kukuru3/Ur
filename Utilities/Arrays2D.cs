@@ -19,7 +19,7 @@ namespace Ur {
         
         static public IEnumerable<Grid.Coords> Iterate(int w, int h) {
             for (var y = 0; y < w; y++)
-            for (var x = 0; x < w; x++) {                
+            for (var x = 0; x < w; x++) {
                 yield return new Grid.Coords(x, y);
             }
         }
@@ -68,7 +68,7 @@ namespace Ur {
             internal Iterator2D(T[,] array) {
                 arrayRef = array;
                 W = array.GetLength(0);
-                H = array.GetLength(1);            
+                H = array.GetLength(1);
             }
         }
 

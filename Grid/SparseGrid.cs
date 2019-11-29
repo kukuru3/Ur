@@ -19,23 +19,21 @@ namespace Ur.Grid {
             invalidateBoundingBox = true;
         }
 
+        public virtual T Insert(T item) {
+            backingCollection[item.Position] = item;
+            invalidateBoundingBox = true;
+            return item;
+        }
+
+        public virtual void Remove(T item) {
+            backingCollection.Remove(item.Position);
+            invalidateBoundingBox = true;
+        }
+
         public virtual void RemoveItems(IEnumerable<T> items) {
             foreach (var item in items) backingCollection.Remove(item.Position);
             invalidateBoundingBox = true;
         }
-
-        //public void AddItem(T item, int atX, int atY) {            
-        //    var key = new Coords(atX, atY);
-        //    backingCollection[key] = item;
-        //    if (!invalidateBoundingBox && !BoundingBox.Contains(key)) invalidateBoundingBox = true;            
-        //}
-
-        //public void RemoveItem(int atX, int atY) {
-        //    var key = new Coords(atX, atY);
-        //    backingCollection.Remove(key);
-        //    invalidateBoundingBox = true;
-
-        //}
 
         public void Clear() {
             backingCollection.Clear();
@@ -47,6 +45,13 @@ namespace Ur.Grid {
         public T this[int x, int y] => GetTile(x, y);
         public T this[Coords c]     => GetTile(c);
         public IEnumerable<T> GetAllTiles() => backingCollection.Values;
+
+        public IEnumerable<T> GetTilesInRect(Rect r) {
+            foreach (var tile in r.Enumerate()) {
+                var t = GetTile(tile);
+                if (t != null) yield return t;
+            }
+        }
         
         public T GetTile(int x, int y) {
             backingCollection.TryGetValue(new Coords(x, y), out T val);

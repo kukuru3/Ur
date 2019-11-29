@@ -9,9 +9,9 @@ namespace Ur.Collections {
         BreadthFirst,
     }
 
-
     /// <summary> Is it efficient? Not really. Is it ubiquitous? Nah.
-    /// Does it even make sense to have a generic all-purpose tree class? Of course not</summary>
+    /// Does it even make sense to have a generic all-purpose tree class? Of course not.
+    /// Will it do the job needed for now? Hell yeah.</summary>
     /// <typeparam name="T"></typeparam>
     public class Tree<T> where T : class {
 
@@ -27,7 +27,12 @@ namespace Ur.Collections {
             nodeSet = new HashSet<TreeNode>();
         }
         #endregion
-        
+
+        #region Events
+        public event Action<T> ItemRemoved;
+        public event Action<T> ItemInserted;
+        #endregion
+
         private TreeNode GetNodeOf(T item) => itemLookup[item];
 
         #region Getting the children and the parent
@@ -38,20 +43,12 @@ namespace Ur.Collections {
         public T ParentOf(T item) => GetNodeOf(item)?.parent?.MyItem;
         #endregion
 
-        public bool AlreadyInTree(T item) => itemLookup.ContainsKey(item);
+        public bool IsMemberOfTree(T item) => item != null && itemLookup.ContainsKey(item);
 
-        public void Remove(T item) {
-            var node = GetNodeOf(item);
-            Detach(node);
-            itemLookup.Remove(item);
-            ShakeTree();
-        }
-
-        /// <summary> Remove all nodes whose parent node is no longer in the set.
-        /// Then, if any nodes were removed thus, repeat the process.</summary>
+        /// <summary> Remove all nodes whose parent node is no longer in the set.</summary>
         public void ShakeTree() {
             bool repeat = true;
-            while(repeat) {                
+            while(repeat) {
                 var orphanNodes = nodeSet.Where(n => !nodeSet.Contains(n.parent)).ToList();
                 orphanNodes.Remove(rootNode);
                 repeat = orphanNodes.Count() > 0;
@@ -83,8 +80,12 @@ namespace Ur.Collections {
         }
 
         
-        public IEnumerable<T> FlattenHierarchy(FlattenMethods method = FlattenMethods.BreadthFirst) {
+        public IEnumerable<T> FlattenTreeHierarchy(FlattenMethods method = FlattenMethods.BreadthFirst) {
             return _FlattenHierarchy(rootNode).Select(n => n.MyItem);
+        }
+
+        public IEnumerable<T> FlattenHierarchyFromNode(T item,  FlattenMethods method = FlattenMethods.BreadthFirst) {
+            return _FlattenHierarchy(GetNodeOf(item), method).Select(n => n.MyItem);
         }
 
         private IEnumerable<TreeNode> _FlattenHierarchy(TreeNode startingFrom, FlattenMethods method = FlattenMethods.BreadthFirst) {
@@ -117,14 +118,24 @@ namespace Ur.Collections {
             var node = new TreeNode(this, forItem);
             itemLookup.Add(forItem, node);
             nodeSet.Add(node);
+            ItemInserted?.Invoke(forItem);
             return node;
         }
 
+        public void Remove(T item) {
+            if (!IsMemberOfTree(item)) return;
+            var node = GetNodeOf(item);
+            DestroyNode(node);
+            ShakeTree();
+        }
 
         private void DestroyNode(TreeNode node) {
-            EnsureInTree(node.MyItem);
+            Detach(node);
             itemLookup.Remove(node.MyItem);
             nodeSet.Remove(node);
+            ItemRemoved?.Invoke(node.MyItem);
+            foreach (var child in node.children.ToArray()) 
+                DestroyNode(child);
         }
         #endregion
        
@@ -136,6 +147,7 @@ namespace Ur.Collections {
             if (child.parent != null) Detach(child);
             child.parent = parent;
             parent.children.Add(child);
+
             ShakeTree();
         }
 
@@ -148,15 +160,15 @@ namespace Ur.Collections {
 
         /// <summary> Remove parent-child relationship</summary>
         private void Detach(TreeNode node) {
-            node.parent.children.Remove(node);
+            node.parent?.children.Remove(node);
             node.parent = null;
         }
 
         private void EnsureNotInTree(T forItem) {
-            if (AlreadyInTree(forItem)) throw new InvalidOperationException("Node already exists...");
+            if (IsMemberOfTree(forItem)) throw new InvalidOperationException("Node already exists...");
         }
         private void EnsureInTree(T forItem) {
-            if (!AlreadyInTree(forItem)) throw new InvalidOperationException("Node does not exist, but should.");
+            if (!IsMemberOfTree(forItem)) throw new InvalidOperationException("Node does not exist, but should.");
         } 
         #endregion
 

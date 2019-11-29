@@ -43,6 +43,7 @@ namespace Ur.Graph {
 
         #region Connection management
         public virtual Edge Connect(Node a, Node b) {
+            if (a == b) throw new GraphStateException(this, "You want to connect item with itself " + a.Index);
             var edge = new Edge(a, b);
             TryRegisterEdge(edge);
             return edge;
@@ -77,6 +78,11 @@ namespace Ur.Graph {
 #endregion
 
         #region Node and edge access
+
+        public void AddNode(Node node) {
+            nodes.Add(node);
+        }
+
         public IEnumerable<Node> AllNodes {
             get {
                 #if DOTNET_35

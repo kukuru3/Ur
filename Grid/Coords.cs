@@ -10,22 +10,22 @@ namespace Ur.Grid {
 
         public readonly int X;
         public readonly int Y;
-
         
         public override int GetHashCode() {
             unchecked { 
                 return (HASH_BASE + Y.GetHashCode()) * HASH_BASE + X.GetHashCode();
             }
         }
-        public override bool Equals(object obj) {
-            if (!(obj is Coords)) return false;
-            return (Coords)obj == this;            
-        }
-        
+
+        public override bool Equals(object obj) => (obj is Coords c) ? c == this : false;
+
         public Coords(int x, int y) { X = x; Y = y; }
 
-        public static bool operator ==(Coords a, Coords b) { return a.X == b.X && a.Y == b.Y; }
-        public static bool operator !=(Coords a, Coords b) { return a.X != b.X || a.Y != b.Y; }
+        public static bool operator ==(Coords a, Coords b) => a.X == b.X && a.Y == b.Y;
+        public static bool operator !=(Coords a, Coords b) => a.X != b.X || a.Y != b.Y;
+
+        public static bool operator ==(Coords a, (int x, int y) b) => a.X == b.x && a.Y == b.y;
+        public static bool operator !=(Coords a, (int x, int y) b) => a.X != b.x || a.Y != b.y;
 
         public static Coords operator +(Coords a, Coords b) {  return new Coords(a.X + b.X, a.Y + b.Y); }
         public static Coords operator -(Coords a, Coords b) {  return new Coords(a.X - b.X, a.Y - b.Y); }
@@ -43,9 +43,7 @@ namespace Ur.Grid {
             return dx + dy;
         }
 
-        public Vector2 ToFloat() {
-            return new Vector2(X, Y);
-        }
+        public Vector2 ToFloat() => new Vector2(X, Y);
 
         public bool Equals(Coords other) { return this == other; }
 
@@ -61,7 +59,6 @@ namespace Ur.Grid {
         }
 
         Coords IHasPosition.Position { get { return this; } }
-
 
     }
 }

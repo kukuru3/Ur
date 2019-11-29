@@ -30,10 +30,10 @@ namespace Ur.Grid {
         public IEnumerable<Coords> Enumerate() {
             for (var y = Y0; y <= Y1; y++)
             for (var x = X0; x <= X1; x++) 
-                yield return new Coords(x, y);            
+                yield return new Coords(x, y);
         }
 
-        /// <summary> Return true if coordinates supplied fall within this rect. </summary>        
+        /// <summary> Return true if coordinates supplied fall within this rect. </summary>
         public bool Contains(Coords crds) => crds.X >= X0 && crds.X <= X1 && crds.Y >= Y0 && crds.Y <= Y1;
         
         public bool Contains (int x, int y) => x >= X0 && x <= X1 && y >= Y0 && y <= Y1;

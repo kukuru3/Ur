@@ -64,6 +64,6 @@ namespace Ur.Random {
             foreach (var item in items) dict[item] = scoreFunction(item);
             return WeightedPick(dict, rng);
         }
-                
+
     }
 }

@@ -34,8 +34,6 @@ namespace Ur {
 
         public static uint ToUnsignedInteger(Color c)
         { 
-
-            
             return ((uint)Numbers.Floor(255f * c.r.Choke(0f, 1f)) << 24) |
                    ((uint)Numbers.Floor(255f * c.g.Choke(0f, 1f)) << 16) |
                    ((uint)Numbers.Floor(255f * c.b.Choke(0f, 1f)) << 8 ) |
@@ -108,6 +106,12 @@ namespace Ur {
 
         static public Color operator * (Color ca, float cb) {
             return new Color(ca.r * cb, ca.g * cb, ca.b * cb, ca.a);
+        }
+
+        public static Color FromRGB255(byte r, byte g, byte b) {
+            var c = new Color(r, g, b);
+            c *= inv256;
+            return c;
         }
 
         public static Color FromHSV(float h, float s, float v)
