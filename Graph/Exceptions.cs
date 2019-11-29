@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Ur.Graph {
     public class GraphStateException : Exception {
         public Graph Graph { get; }
-        public GraphStateException(Graph g, string message) : base(message)  {
+        public GraphStateException(Graph g, string message) : base(message) {
             Graph = g;
         }
     }

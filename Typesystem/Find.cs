@@ -7,7 +7,7 @@ namespace Ur.Typesystem {
     public class Finder {
 
         #region Fields
-        List<Assembly> assemblies; 
+        List<Assembly> assemblies;
         #endregion
 
         #region Factories
@@ -17,7 +17,7 @@ namespace Ur.Typesystem {
 
         static public Finder FromAssemblies(IEnumerable<Assembly> assemblies) {
             return new Finder(assemblies);
-        } 
+        }
 
         static public Finder FromCurrentAssembly() {
             var a = Assembly.GetCallingAssembly();
@@ -26,26 +26,26 @@ namespace Ur.Typesystem {
 
         #endregion
 
-        private Finder(IEnumerable<Assembly> assemblies ) {
+        private Finder(IEnumerable<Assembly> assemblies) {
             this.assemblies = new List<Assembly>(assemblies);
         }
 
         public IEnumerable<Type> ImplementingTypes(Type tt) {
             var l = new List<Type>();
-            foreach (var ass in this.assemblies) 
-                foreach (var type in ass.GetTypes()) 
+            foreach (var ass in this.assemblies)
+                foreach (var type in ass.GetTypes())
                     if (!type.IsAbstract)
                         if (tt.IsAssignableFrom(type))
                             l.Add(type);
             return l;
         }
-        
+
         public IEnumerable<Type> ImplementingTypes<T>() where T : class {
             var tt = typeof(T);
             return ImplementingTypes(tt);
         }
 
-        public (T attribute, Type type)[] GetTypesWithAttributes<T>() where T: Attribute {
+        public (T attribute, Type type)[] GetTypesWithAttributes<T>() where T : Attribute {
             var l = new List<(T, Type)>();
 
             foreach (var ass in assemblies)

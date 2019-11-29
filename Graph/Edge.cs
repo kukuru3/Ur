@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Ur.Graph {
     public class Edge : IComparable<Edge> {
-                
+
         #region Properties
         public Node A { get; }
         public Node B { get; }
@@ -26,13 +25,13 @@ namespace Ur.Graph {
             Index = ++instanceCounter;
         }
 
-        protected internal virtual void Clear() { } 
+        protected internal virtual void Clear() { }
         #endregion
 
         #region Satisfaction of IComparable
         public int CompareTo(Edge other) {
             return (Index - other.Index).Sign();
-        } 
+        }
         #endregion
 
         #region Declare edge equality to depend on its two nodes
@@ -46,11 +45,11 @@ namespace Ur.Graph {
             unchecked {
                 return A.GetHashCode() + B.GetHashCode();
             }
-        } 
+        }
         #endregion
 
         #region Static instance counter
-        static private int instanceCounter; 
+        static private int instanceCounter;
         #endregion
 
     }

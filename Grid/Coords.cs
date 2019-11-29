@@ -10,9 +10,9 @@ namespace Ur.Grid {
 
         public readonly int X;
         public readonly int Y;
-        
+
         public override int GetHashCode() {
-            unchecked { 
+            unchecked {
                 return (HASH_BASE + Y.GetHashCode()) * HASH_BASE + X.GetHashCode();
             }
         }
@@ -27,13 +27,13 @@ namespace Ur.Grid {
         public static bool operator ==(Coords a, (int x, int y) b) => a.X == b.x && a.Y == b.y;
         public static bool operator !=(Coords a, (int x, int y) b) => a.X != b.x || a.Y != b.y;
 
-        public static Coords operator +(Coords a, Coords b) {  return new Coords(a.X + b.X, a.Y + b.Y); }
-        public static Coords operator -(Coords a, Coords b) {  return new Coords(a.X - b.X, a.Y - b.Y); }
+        public static Coords operator +(Coords a, Coords b) { return new Coords(a.X + b.X, a.Y + b.Y); }
+        public static Coords operator -(Coords a, Coords b) { return new Coords(a.X - b.X, a.Y - b.Y); }
 
         public static Coords operator *(Coords a, int b) { return new Coords(a.X * b, a.Y * b); }
         public static Coords operator /(Coords a, int b) { return new Coords(a.X / b, a.Y / b); }
 
-        public static float  Distance(Coords a, Coords b) {
+        public static float Distance(Coords a, Coords b) {
             var dx = (a.X - b.X); var dy = (a.Y - b.Y);
             return Numbers.Root(dx * dx + dy * dy);
         }
@@ -49,9 +49,9 @@ namespace Ur.Grid {
 
         static public IEnumerable<Coords> Iterate(int w, int h) {
             for (var y = 0; y < h; y++)
-            for (var x = 0; x < w; x++) {
-                yield return new Coords(x, y);
-            }
+                for (var x = 0; x < w; x++) {
+                    yield return new Coords(x, y);
+                }
         }
 
         public Coords Move(int deltaX, int deltaY) {

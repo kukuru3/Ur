@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace Ur.Random {
     public class Generator : IRng {
@@ -17,10 +15,10 @@ namespace Ur.Random {
             twister = new Implementers.MersenneTwister(intsToUlongs(arr));
         }
 
-        
+
         public Generator(params int[] seed) {
             twister = new Implementers.MersenneTwister(intsToUlongs(seed));
-        } 
+        }
         #endregion
 
         #region Private guts
@@ -38,7 +36,7 @@ namespace Ur.Random {
         }
 
         #endregion
-        
+
         /// <returns> Next uniform integer in the rng sequence, INCLUSIVE with min and max</returns>
         public int Next(int min, int max) {
             return min + twister.genrand_N(max - min + 1);
@@ -47,8 +45,8 @@ namespace Ur.Random {
         public int NextInt() {
             return twister.genrand_N(int.MaxValue);
         }
-     
-        public float Next(float min, float max) {            
+
+        public float Next(float min, float max) {
             return min + (max - min) * (float)twister.RandomDouble();
         }
 
@@ -71,7 +69,7 @@ namespace Ur.Random {
             }
             return buffer;
         }
-        
+
         public float NextGaussian(float mean, float sigma) {
             return mean + BoxMuller() * sigma;
         }
@@ -84,14 +82,14 @@ namespace Ur.Random {
                 var val = boxMullerSpare.Value;
                 boxMullerSpare = null;
                 return val;
-            }            
+            }
             float x, y, z;
             do {
-                x = 2f * ( Next() - 1f );
-                y = 2f * ( Next() - 1f );
+                x = 2f * (Next() - 1f);
+                y = 2f * (Next() - 1f);
                 z = x * x + y * y;
             } while (z > 1f || z == 0f);
-            
+
             var fac = Numbers.Root(-2f * System.Math.Log(z) / z);
             boxMullerSpare = x * fac;
             return y * fac;

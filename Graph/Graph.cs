@@ -7,38 +7,38 @@ namespace Ur.Graph {
     public class Graph {
 
         #region Fields
-        #if DOTNET_35
+#if DOTNET_35
             
-        #else
+#else
         protected SortedSet<Edge> edges;
         protected SortedSet<Node> nodes;
-        #endif
+#endif
         #endregion
 
         #region Ctor
         public Graph() {
-            #if DOTNET_35
+#if DOTNET_35
             throw new NotImplementedException();
-            #else
+#else
             edges = new SortedSet<Edge>();
             nodes = new SortedSet<Node>();
-            #endif
+#endif
         }
 
         #endregion
 
         #region Clearing
         public virtual void Clear() {
-            #if DOTNET_35
+#if DOTNET_35
             throw new NotImplementedException();
-            #else
+#else
             foreach (var node in nodes) node.Clear();
             foreach (var edge in edges) edge.Clear();
             edges.Clear();
             nodes.Clear();
-            #endif
-            
-        } 
+#endif
+
+        }
         #endregion
 
         #region Connection management
@@ -51,14 +51,14 @@ namespace Ur.Graph {
 
         protected void TryRegisterEdge(Edge e) {
             var existing = FindConnection(e.A, e.B);
-            if (existing!= null) throw new GraphEdgeException(existing, "edge already exists!");
+            if (existing != null) throw new GraphEdgeException(existing, "edge already exists!");
             e.A.RegisterEdge(e);
             e.B.RegisterEdge(e);
-            #if DOTNET_35
+#if DOTNET_35
                 throw new NotImplementedException();
-            #else
-                edges.Add(e);            
-            #endif
+#else
+            edges.Add(e);
+#endif
         }
 
         public void BreakConnection(Node a, Node b) {
@@ -66,16 +66,16 @@ namespace Ur.Graph {
             if (edge == null) throw new GraphEdgeException(null, "nonexistent edge cannot be broken.");
             a.UnregisterEdge(edge);
             b.UnregisterEdge(edge);
-            #if DOTNET_35
-            #else
-                edges.Remove(edge);
-            #endif
+#if DOTNET_35
+#else
+            edges.Remove(edge);
+#endif
         }
 
         public Edge FindConnection(Node a, Node b) {
             return a.GetEdgeTo(b);
         }
-#endregion
+        #endregion
 
         #region Node and edge access
 
@@ -85,41 +85,41 @@ namespace Ur.Graph {
 
         public IEnumerable<Node> AllNodes {
             get {
-                #if DOTNET_35
+#if DOTNET_35
                     throw new NotImplementedException();
-                #else
+#else
                 return nodes;
-                #endif
+#endif
             }
         }
 
         public IEnumerable<Edge> AllEdges {
             get {
-                #if DOTNET_35
+#if DOTNET_35
                     throw new NotImplementedException();
-                #else
-                    return edges;
-                #endif
+#else
+                return edges;
+#endif
             }
         }
 
         public IEnumerable<Node> Nodes(Predicate<Node> predicate) {
-            #if DOTNET_35
+#if DOTNET_35
             throw new NotImplementedException();
-            #else
+#else
             foreach (var node in nodes) if (predicate(node)) yield return node;
-            #endif
+#endif
         }
 
         public IEnumerable<Edge> Edges(Predicate<Edge> predicate) {
-            #if DOTNET_35
+#if DOTNET_35
                 throw new NotImplementedException();
-            #else
-                foreach (var edge in edges) if (predicate(edge)) yield return edge;
-            #endif
+#else
+            foreach (var edge in edges) if (predicate(edge)) yield return edge;
+#endif
         }
 
-#endregion
+        #endregion
 
     }
 }

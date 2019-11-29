@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 namespace Ur.Filesystem {
     public class FileFinder {
 
@@ -12,7 +11,7 @@ namespace Ur.Filesystem {
 
         public IEnumerable<string> FindFiles(string pattern, bool includeSubfolders = true) {
             var di = new DirectoryInfo(Path);
-            return di.EnumerateFiles(pattern, includeSubfolders ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly )
+            return di.EnumerateFiles(pattern, includeSubfolders ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly)
                 .Select(fi => fi.FullName);
         }
 

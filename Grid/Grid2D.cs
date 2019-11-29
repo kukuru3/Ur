@@ -19,7 +19,7 @@ namespace Ur.Grid {
         int IGrid.W => W;
         int IGrid.H => H;
 
-        public T this[int x, int y] => HasTile(x,y) ? tiles[x, y] : default(T);
+        public T this[int x, int y] => HasTile(x, y) ? tiles[x, y] : default(T);
 
         #endregion
 
@@ -48,10 +48,10 @@ namespace Ur.Grid {
         public IEnumerable<T> GetAllTiles() {
             foreach (var t in tiles) yield return t;
         }
-               
+
     }
 
-   
+
 
 
 }

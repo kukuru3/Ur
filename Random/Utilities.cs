@@ -8,19 +8,19 @@ namespace Ur.Random {
         static public T PickRandom<T>(this IEnumerable<T> source, Generator rng) {
             var arr = source.ToArray();
             if (arr.Length == 0) return default(T);
-            return arr[rng.Next(0, arr.Length-1)];
+            return arr[rng.Next(0, arr.Length - 1)];
         }
 
         static public T PickRandom<T>(this IList<T> source, Generator rng) {
             if (source?.Count == 0) return default(T);
-            return source[rng.Next(0, source.Count-1)];
+            return source[rng.Next(0, source.Count - 1)];
         }
-        
+
         static public T WeightedPick<T>(this IList<T> items, IList<int> weights, Generator rng) {
-            var sum = 0; 
-            var probs   = new List<int>(32);
-            var things  = new List<T>(32);
-            
+            var sum = 0;
+            var probs = new List<int>(32);
+            var things = new List<T>(32);
+
             if (weights.Count != items.Count) throw new Exception("Invalid weighted pick");
 
             for (var i = 0; i < weights.Count; i++) {
@@ -31,10 +31,10 @@ namespace Ur.Random {
                 }
             }
             if (sum <= 0) return default(T);
-            var roll = rng.Next(0, sum-1);
-            sum = 0; 
+            var roll = rng.Next(0, sum - 1);
+            sum = 0;
 
-            for (var i = 0; i < probs.Count;i++) {
+            for (var i = 0; i < probs.Count; i++) {
                 var newSum = sum + probs[i];
                 if (roll >= sum && roll < newSum) return things[i];
                 sum = newSum;
@@ -43,10 +43,10 @@ namespace Ur.Random {
         }
 
         static public T WeightedPick<T>(this IDictionary<T, int> items, Generator rng) {
-            var sum = 0; 
-            foreach (var item in items)  sum += item.Value;
+            var sum = 0;
+            foreach (var item in items) sum += item.Value;
             if (sum <= 0) return default(T);
-            var roll = rng.Next(0, sum-1);
+            var roll = rng.Next(0, sum - 1);
             sum = 0;
             foreach (var item in items) {
                 var newSum = sum + item.Value;
@@ -54,7 +54,7 @@ namespace Ur.Random {
                 sum = newSum;
             }
             throw new Exception("Invalid weighted pick");
-            
+
         }
 
         public delegate int WeightedPickScorer<T>(T item);

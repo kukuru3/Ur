@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Ur {
     /// <summary> Contains extension methods </summary>
@@ -7,34 +6,34 @@ namespace Ur {
 
         /// <summary> Iterates through items of a 2-dimensional array</summary>
         ///<returns> An iterator object </returns>
-        static public IEnumerable<Iterator2D<T> > Iterate<T>(this T[,] array ) {
+        static public IEnumerable<Iterator2D<T>> Iterate<T>(this T[,] array) {
             var i = new Iterator2D<T>(array);
             var w = i.W; var h = i.H;
             for (var x = 0; x < w; x++)
-            for (var y = 0; y < h; y++) {
-                i.X = x; i.Y = y;
-                yield return i;
-            }
+                for (var y = 0; y < h; y++) {
+                    i.X = x; i.Y = y;
+                    yield return i;
+                }
         }
-        
+
         static public IEnumerable<Grid.Coords> Iterate(int w, int h) {
             for (var y = 0; y < w; y++)
-            for (var x = 0; x < w; x++) {
-                yield return new Grid.Coords(x, y);
-            }
+                for (var x = 0; x < w; x++) {
+                    yield return new Grid.Coords(x, y);
+                }
         }
 
         static public IEnumerable<Iterator2D> IterateB(int w, int h) {
             var i = new Iterator2D(w, h);
             for (var y = 0; y < w; y++)
-            for (var x = 0; x < w; x++) {
-                i.X = x; i.Y = y;
-                yield return i;
-            }
+                for (var x = 0; x < w; x++) {
+                    i.X = x; i.Y = y;
+                    yield return i;
+                }
         }
 
         public class Iterator2D {
-            public int W { get; }            
+            public int W { get; }
             public int H { get; }
             public int X { get; internal set; }
             public int Y { get; internal set; }
@@ -64,7 +63,7 @@ namespace Ur {
                 get { return arrayRef[X, Y]; }
                 set { arrayRef[X, Y] = value; }
             }
-            
+
             internal Iterator2D(T[,] array) {
                 arrayRef = array;
                 W = array.GetLength(0);
@@ -75,8 +74,8 @@ namespace Ur {
 
     }
 
-   
 
-    
-    
+
+
+
 }

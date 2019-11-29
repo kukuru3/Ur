@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 namespace Ur.Grid {
     /// <summary> Tiles are added and removed haphazardly in this class, and there are no bounds limits (0 is not lowest)</summary>
     /// <typeparam name="T">Type of grid tile</typeparam>
     public class SparseGrid<T> : IGrid<T> where T : IHasPosition {
-      
+
         #region Field
         private Dictionary<Coords, T> backingCollection;
         #endregion
@@ -41,9 +39,9 @@ namespace Ur.Grid {
         }
 
         #region Value access - publicly exposed
-       
+
         public T this[int x, int y] => GetTile(x, y);
-        public T this[Coords c]     => GetTile(c);
+        public T this[Coords c] => GetTile(c);
         public IEnumerable<T> GetAllTiles() => backingCollection.Values;
 
         public IEnumerable<T> GetTilesInRect(Rect r) {
@@ -52,12 +50,12 @@ namespace Ur.Grid {
                 if (t != null) yield return t;
             }
         }
-        
+
         public T GetTile(int x, int y) {
             backingCollection.TryGetValue(new Coords(x, y), out T val);
             return val;
         }
-        
+
         public T GetTile(Coords crds) {
             backingCollection.TryGetValue(crds, out T val);
             return val;
@@ -65,22 +63,24 @@ namespace Ur.Grid {
 
         public bool HasTile(int x, int y) {
             return backingCollection.ContainsKey(new Coords(x, y));
-        } 
+        }
 
-       
+
         #endregion
 
         #region Bounds getters - publicly exposed
-        
-        public Rect BoundingBox { get {
-            if (invalidateBoundingBox) RecalculateBoundingBox();
-            return boundingBox;
-        } }
 
-        
+        public Rect BoundingBox {
+            get {
+                if (invalidateBoundingBox) RecalculateBoundingBox();
+                return boundingBox;
+            }
+        }
+
+
         int IGrid.W => BoundingBox.Width;
         int IGrid.H => BoundingBox.Height;
-        
+
         #endregion
 
         protected int W => BoundingBox.Width;
@@ -96,17 +96,17 @@ namespace Ur.Grid {
             int minY = int.MaxValue; int maxY = int.MinValue;
 
             foreach (var tile in backingCollection.Keys) {
-                if (tile.X < minX ) minX = tile.X; if (tile.X > maxX ) maxX = tile.X;
-                if (tile.Y < minY ) minY = tile.Y; if (tile.Y > maxY ) maxY = tile.Y;
+                if (tile.X < minX) minX = tile.X; if (tile.X > maxX) maxX = tile.X;
+                if (tile.Y < minY) minY = tile.Y; if (tile.Y > maxY) maxY = tile.Y;
             }
             boundingBox = Rect.FromBounds(minX, maxX, minY, maxY);
         }
 
-        
+
 
         #endregion
 
     }
 
-    
+
 }

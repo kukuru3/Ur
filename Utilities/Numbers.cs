@@ -1,25 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SM = System.Math;
+﻿using SM = System.Math;
+
 namespace Ur {
     /// <summary> Mathematics extension methods and other methods </summary>
     public static class Numbers {
 
         static public float Lerp(this float a, float b, float alpha) {
             return a + (b - a) * alpha;
-            
+
         }
 
         static public float Min(params float[] numbers) {
             if (numbers.Length == 0) return 0f;
             var localMinimum = float.MaxValue;
-            for(var i = 0; i < numbers.Length; i++) if (numbers[i] < localMinimum) localMinimum = numbers[i];
+            for (var i = 0; i < numbers.Length; i++) if (numbers[i] < localMinimum) localMinimum = numbers[i];
             return localMinimum;
         }
 
-        static public int   Max(params int[] numbers) {
+        static public int Max(params int[] numbers) {
             if (numbers.Length == 0) return 0;
             var localMax = int.MinValue;
             for (var i = 0; i < numbers.Length; i++) if (numbers[i] > localMax) localMax = numbers[i];
@@ -36,7 +33,7 @@ namespace Ur {
         static public float Max(params float[] numbers) {
             if (numbers.Length == 0) return 0f;
             var localMax = float.MinValue;
-            for(var i = 0; i < numbers.Length; i++) if (numbers[i] > localMax) localMax = numbers[i];
+            for (var i = 0; i < numbers.Length; i++) if (numbers[i] > localMax) localMax = numbers[i];
             return localMax;
         }
 
@@ -76,13 +73,13 @@ namespace Ur {
         static public int Choke(this int value, int min, int max) {
             if (value < min) return min;
             if (value > max) return max;
-            return value;            
+            return value;
         }
 
         static public float Choke(this float value, float min = 0f, float max = 1f) {
             if (value < min) return min;
             if (value > max) return max;
-            return value;            
+            return value;
         }
 
         /// <param name="value"></param>
@@ -112,7 +109,7 @@ namespace Ur {
         }
 
         static public int GreatestCommonDenominator(int a, int b) {
-            var g = a % b; 
+            var g = a % b;
             if (g == 0) return b; else return GreatestCommonDenominator(b, g);
         }
 
@@ -120,8 +117,7 @@ namespace Ur {
             return (a * b) / (GreatestCommonDenominator(a, b));
         }
 
-        static public float Approach(this float a, float target, float maxApproach)
-        {
+        static public float Approach(this float a, float target, float maxApproach) {
             float d = (target - a); float v = a;
             if (SM.Abs(d) < maxApproach) v += d;
             else v += SM.Sign(d) * maxApproach;
@@ -131,7 +127,7 @@ namespace Ur {
         static public int Approach(this int a, int target, int maxApproach) {
             int d = (target - a); int v = a;
             if (a.Abs() < maxApproach) v += d;
-            else v+= d.Sign() * maxApproach;
+            else v += d.Sign() * maxApproach;
             return v;
         }
 

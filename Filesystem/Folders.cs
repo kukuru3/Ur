@@ -6,17 +6,17 @@ namespace Ur.Filesystem {
     static public class Folders {
 
         static private HashSet<string> folderCorrections = new HashSet<string>(new[] {
-            "Release", "Debug", "Debug32", "Release32", "Debug64", "Release64", "Build", "x86", "x64", "bin"
+            "Release", "Debug", "Debug32", "Release32", "Debug64", "Release64", "Build", "x86", "x64", "bin", "netcoreapp3.0"
         });
 
         static private void DoPathsCorrection(string[] additions = null) {
-            var dir =  new DirectoryInfo( Directory.GetCurrentDirectory());
-            while( folderCorrections.Contains(dir.Name) ) {
+            var dir = new DirectoryInfo(Directory.GetCurrentDirectory());
+            while (folderCorrections.Contains(dir.Name)) {
                 dir = dir.Parent;
             }
             Directory.SetCurrentDirectory(dir.FullName);
         }
-        
+
 
         /// <param name="relativeOrAbsolutePath"></param>
         static public string GetDirectory(string relativeOrAbsolutePath) {
@@ -25,9 +25,9 @@ namespace Ur.Filesystem {
                 path = relativeOrAbsolutePath;
             } else {
                 DoPathsCorrection();
-                path = Path.Combine( Directory.GetCurrentDirectory(), relativeOrAbsolutePath);
+                path = Path.Combine(Directory.GetCurrentDirectory(), relativeOrAbsolutePath);
             }
-            
+
             var di = new DirectoryInfo(path);
             if (!di.Exists) throw new DirectoryNotFoundException(relativeOrAbsolutePath);
             return path;
@@ -37,6 +37,6 @@ namespace Ur.Filesystem {
             return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
         }
-        
+
     }
 }

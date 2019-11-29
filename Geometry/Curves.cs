@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using crds2 = Ur.Geometry.Vector2;
 using static Ur.Numbers;
+using crds2 = Ur.Geometry.Vector2;
 
 namespace Ur.Geometry {
     public static class Curves {
@@ -14,7 +14,7 @@ namespace Ur.Geometry {
             float mu2 = mu * mu;
             var a0 = d - c - a + b;
             var a1 = a - b - a0;
-            var a2 = c - a;            
+            var a2 = c - a;
             return a0 * mu * mu2 + a1 * mu2 + a2 * mu + b;
         }
 
@@ -27,11 +27,11 @@ namespace Ur.Geometry {
             // "If value is not found and value is less than one or more elements in array, 
             // the negative number returned is the bitwise complement of the index of the first element that is larger than value."
             if (resultingIndex < 0) resultingIndex = ~resultingIndex;
-            
+
             var smallerIndex = resultingIndex - 1;
             var remainder = (value - series[smallerIndex]) / (series[resultingIndex] - series[smallerIndex]);
             return remainder + smallerIndex;
-                        
+
         }
 
         static public crds2[] SmoothPolyline(IEnumerable<crds2> input, float spacing) {
@@ -41,13 +41,13 @@ namespace Ur.Geometry {
             var single = new float[n];
             // find individual distances, build a cumulative values array from it.
             for (var i = 0; i < n - 1; i++) {
-                single[i+1] = Vectors.Distance(s[i], s[i+1]);
-                cumula[i+1] = cumula[i] + single[i+1];
+                single[i + 1] = Vectors.Distance(s[i], s[i + 1]);
+                cumula[i + 1] = cumula[i] + single[i + 1];
             }
-            
+
             var result = new List<crds2>();
             var cursor = 0f;
-            float max = cumula[n-1];
+            float max = cumula[n - 1];
             result.Add(s[0]);
 
             do {
@@ -57,15 +57,15 @@ namespace Ur.Geometry {
                 int i = mu.Floor();
                 var A = s[Max(i - 1, 0)];
                 var B = s[i];
-                var C = s[i+1];
-                var D = s[ (i < n - 2) ? i + 2 : n - 1 ]; // wut.
+                var C = s[i + 1];
+                var D = s[(i < n - 2) ? i + 2 : n - 1]; // wut.
                 var crds = CubicInterpolate(A, B, C, D, mu - i);
                 result.Add(crds);
             } while (cursor < max);
 
-            result.Add(s[n-1]);
+            result.Add(s[n - 1]);
             return result.ToArray();
-            
+
         }
 
     }

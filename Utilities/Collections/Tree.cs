@@ -45,22 +45,7 @@ namespace Ur.Collections {
 
         public bool IsMemberOfTree(T item) => item != null && itemLookup.ContainsKey(item);
 
-        /// <summary> Remove all nodes whose parent node is no longer in the set.</summary>
-        public void ShakeTree() {
-            bool repeat = true;
-            while(repeat) {
-                var orphanNodes = nodeSet.Where(n => !nodeSet.Contains(n.parent)).ToList();
-                orphanNodes.Remove(rootNode);
-                repeat = orphanNodes.Count() > 0;
-                if (repeat) { 
-                    nodeSet.ExceptWith(orphanNodes);
-                    foreach (var node in orphanNodes) itemLookup.Remove(node.MyItem);
-                    repeat = true;
-                }
-            }
-        }
-
-        public void Insert(T item, T asChildOf ) {
+        public void Insert(T item, T asChildOf) {
             if (asChildOf == null) {
                 CreateRootNode(item);
             } else {
@@ -69,23 +54,38 @@ namespace Ur.Collections {
                 Attach(p, c);
             }
         }
-   
+
         public void SortAllChildrenInTree(Comparison<T> comparison) {
 
             Comparison<TreeNode> childComparison = (TreeNode a, TreeNode b) => comparison(a.MyItem, b.MyItem);
-                                                                                                 
+
             foreach (var node in _FlattenHierarchy(rootNode)) {
                 node.children.Sort(childComparison);
             }
         }
 
-        
+
         public IEnumerable<T> FlattenTreeHierarchy(FlattenMethods method = FlattenMethods.BreadthFirst) {
             return _FlattenHierarchy(rootNode).Select(n => n.MyItem);
         }
 
-        public IEnumerable<T> FlattenHierarchyFromNode(T item,  FlattenMethods method = FlattenMethods.BreadthFirst) {
+        public IEnumerable<T> FlattenHierarchyFromNode(T item, FlattenMethods method = FlattenMethods.BreadthFirst) {
             return _FlattenHierarchy(GetNodeOf(item), method).Select(n => n.MyItem);
+        }
+
+        /// <summary> Remove all nodes whose parent node is no longer in the set.</summary>
+        internal void ShakeTree() {
+            bool repeat = true;
+            while (repeat) {
+                var orphanNodes = nodeSet.Where(n => !nodeSet.Contains(n.parent)).ToList();
+                orphanNodes.Remove(rootNode);
+                repeat = orphanNodes.Count() > 0;
+                if (repeat) {
+                    nodeSet.ExceptWith(orphanNodes);
+                    foreach (var node in orphanNodes) itemLookup.Remove(node.MyItem);
+                    repeat = true;
+                }
+            }
         }
 
         private IEnumerable<TreeNode> _FlattenHierarchy(TreeNode startingFrom, FlattenMethods method = FlattenMethods.BreadthFirst) {
@@ -102,7 +102,7 @@ namespace Ur.Collections {
             } else if (method == FlattenMethods.DepthFirst) {
                 throw new NotImplementedException("Coming soon");
             }
-            
+
         }
 
         #region Node creation, deletion
@@ -134,11 +134,11 @@ namespace Ur.Collections {
             itemLookup.Remove(node.MyItem);
             nodeSet.Remove(node);
             ItemRemoved?.Invoke(node.MyItem);
-            foreach (var child in node.children.ToArray()) 
+            foreach (var child in node.children.ToArray())
                 DestroyNode(child);
         }
         #endregion
-       
+
         #region Attachment, detachment, hierarchy
         private void Attach(TreeNode parent, TreeNode child) {
             if (child == parent) throw new InvalidOperationException("cannot parent to oneself");
@@ -169,7 +169,7 @@ namespace Ur.Collections {
         }
         private void EnsureInTree(T forItem) {
             if (!IsMemberOfTree(forItem)) throw new InvalidOperationException("Node does not exist, but should.");
-        } 
+        }
         #endregion
 
         #region Declarations
@@ -185,7 +185,7 @@ namespace Ur.Collections {
 
             internal List<TreeNode> children;
             internal TreeNode parent;
-        } 
+        }
         #endregion
 
 

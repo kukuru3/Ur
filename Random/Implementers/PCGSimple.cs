@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Ur.Random.Implementers {
+﻿namespace Ur.Random.Implementers {
     // adapted from http://www.pcg-random.org/download.html
     public class PCGSimple {
         ulong state;

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Ur {
     public static class Enums {
- 
+
         public static IEnumerable<T> IterateValues<T>() {
             return Enum.GetValues(typeof(T)).Cast<T>();
         }
@@ -12,6 +12,6 @@ namespace Ur {
         public static int MaxValue<T>() {
             return IterateValues<T>().Cast<int>().Max();
         }
-    
+
     }
 }

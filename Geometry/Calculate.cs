@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Ur.Geometry {
@@ -38,7 +37,7 @@ namespace Ur.Geometry {
             if (z.Approximately(0f)) return null;
             var U1 = ((D.x - C.x) * (A.y - C.y) - (D.y - C.y) * (A.x - C.x)) / z;
             var U2 = ((B.x - A.x) * (A.y - C.y) - (B.y - A.y) * (A.x - C.x)) / z;
-            return A.Lerp(B, U1);            
+            return A.Lerp(B, U1);
         }
 
         /// <summary> Returns a list of collisions with the unit grid, in order from A to B</summary>        
@@ -46,35 +45,35 @@ namespace Ur.Geometry {
             var D = B - A;
 
             var intersections = new List<Vector2>();
-            
-            if (D.x.Abs() > float.Epsilon ) {
+
+            if (D.x.Abs() > float.Epsilon) {
                 var x0 = Numbers.Min(A.x, B.x).Ceil();
-                var x1= Numbers.Max(A.x, B.x).Floor();                
-                for (var x = x0; x  <= x1; x++) { // intersect our line with vertical line at x
+                var x1 = Numbers.Max(A.x, B.x).Floor();
+                for (var x = x0; x <= x1; x++) { // intersect our line with vertical line at x
                     var intersection = LineLineIntersection(A, B, new Vector2(x, 0), new Vector2(x, 1));
                     if (intersection.HasValue) {
                         intersections.Add(intersection.Value);
                     }
                 }
-            } 
-            if (D.y.Abs() > float.Epsilon) { 
+            }
+            if (D.y.Abs() > float.Epsilon) {
 
                 var y0 = Numbers.Min(A.y, B.y).Ceil();
                 var y1 = Numbers.Max(A.y, B.y).Floor();
-                for (var y = y0; y<= y1; y++) {
+                for (var y = y0; y <= y1; y++) {
                     var intersection = LineLineIntersection(A, B, new Vector2(0, y), new Vector2(1, y));
                     if (intersection.HasValue) {
                         intersections.Add(intersection.Value);
                     }
-                }                
+                }
             }
 
             intersections = new List<Vector2>(intersections.Distinct());
-            intersections.Sort((a,b) => (a.DistanceSquared(A) - b.DistanceSquared(A)).Sign());
+            intersections.Sort((a, b) => (a.DistanceSquared(A) - b.DistanceSquared(A)).Sign());
 
             return intersections.ToArray();
         }
-        
+
 
         /// <summary> Returns whether point P is inside triangle (A, B, C) </summary>        
         public static bool IsPointInTriangle(Vector2 A, Vector2 B, Vector2 C, Vector2 p) {
@@ -97,11 +96,11 @@ namespace Ur.Geometry {
             // Check if point is in triangle
             return (u > 0f) && (v > 0f) && (u + v < 1f);
         }
-                
+
         /// <returns>true if point p lies to the left of directed infinite line A->B</returns>
         /// <remarks>returns false if point lies on the line!</remarks>
-        static public bool IsPointLeftOfLine(Vector2 lineA, Vector2 lineB, Vector2 p ) {
-           return LeftnessOfPoint(lineA, lineB, p) > 0;
+        static public bool IsPointLeftOfLine(Vector2 lineA, Vector2 lineB, Vector2 p) {
+            return LeftnessOfPoint(lineA, lineB, p) > 0;
         }
 
         /// <summary> Returns "leftness" of point p relative to directed infinite line A->B</summary>        
@@ -126,8 +125,8 @@ namespace Ur.Geometry {
             return false;
         }
 
-        static public float Cosine(this Angle a) {return a.Cos; }
-        static public float Sine  (this Angle a) {return a.Sin; }
+        static public float Cosine(this Angle a) { return a.Cos; }
+        static public float Sine(this Angle a) { return a.Sin; }
 
         public static float Tangens(this Angle a) { return a.Sin / a.Cos; }
     }

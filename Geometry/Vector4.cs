@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Ur.Geometry {
+﻿namespace Ur.Geometry {
 
     public class Vector4 {
 
@@ -15,6 +12,6 @@ namespace Ur.Geometry {
         }
 
         public Vector2 XY => new Vector2(X, Y);
-    
+
     }
 }

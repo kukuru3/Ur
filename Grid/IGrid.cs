@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Ur.Grid {
     /// <summary> Any 2d grid of type T </summary>

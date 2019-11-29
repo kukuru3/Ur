@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Ur.Geometry {
     public struct Angle {
@@ -11,17 +10,17 @@ namespace Ur.Geometry {
 
         public float Degrees { get { return inDegrees; } }
         public float Radians { get { return inDegrees * Deg2Rad; } }
-        
+
         /// <summary> Creates a new Angle with specified degrees </summary>        
         public Angle(float degrees) { inDegrees = degrees.Wrap(360f); }
 
         static public Angle FromRadians(float radians) {
-            return new Angle( radians * Rad2Deg );
+            return new Angle(radians * Rad2Deg);
         }
-        
-        static public Angle FromDelta(float dx, float dy) {            
-            if (dx.Abs() < 0.0001f) return new Angle( (dy > 0.0f) ? 90.0f : 270.0f );
-            if (dx > 0.0f)          return new Angle((float)(System.Math.Atan(dy / dx) * Rad2Deg));
+
+        static public Angle FromDelta(float dx, float dy) {
+            if (dx.Abs() < 0.0001f) return new Angle((dy > 0.0f) ? 90.0f : 270.0f);
+            if (dx > 0.0f) return new Angle((float)(System.Math.Atan(dy / dx) * Rad2Deg));
             return new Angle((float)(System.Math.Atan(dy / dx) * Rad2Deg) + 180.0f);
         }
 
@@ -54,13 +53,12 @@ namespace Ur.Geometry {
         /// <param name="target"></param>
         /// <param name="maxdelta"></param>
         /// <returns></returns>
-        public static Angle Approach(Angle source, Angle target, float maxdelta = 360f)
-        {
+        public static Angle Approach(Angle source, Angle target, float maxdelta = 360f) {
             float psi = target.Degrees - source.Degrees;
             if (psi > 180f) psi -= 360f;
             if (psi < -180f) psi += 360f;
-            if (psi.Abs() > maxdelta)   return (source.Degrees + maxdelta * psi.Sign()).Wrap(360f);                
-            else                        return (source.Degrees + psi).Wrap(360f);
+            if (psi.Abs() > maxdelta) return (source.Degrees + maxdelta * psi.Sign()).Wrap(360f);
+            else return (source.Degrees + psi).Wrap(360f);
         }
 
     }

@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace Ur {
 
-namespace Ur {
-
-    public struct Color : IInterpolable<Color>
-    {
+    public struct Color : IInterpolable<Color> {
 
         public float a;
         public float r;
         public float g;
         public float b;
 
-        public Color(float r, float g, float b, float a = 1f)
-        {
+        public Color(float r, float g, float b, float a = 1f) {
             this.a = a;
             this.r = r;
             this.g = g;
@@ -20,8 +15,7 @@ namespace Ur {
         }
 
         private const float inv256 = 1f / 256f;
-        public static Color FromUnsignedInteger(uint col)
-        {
+        public static Color FromUnsignedInteger(uint col) {
             var a = ((col & 0xff000000) >> 24);
             if (a == 0) a = 255;
             return new Color(
@@ -32,31 +26,27 @@ namespace Ur {
             );
         }
 
-        public static uint ToUnsignedInteger(Color c)
-        { 
+        public static uint ToUnsignedInteger(Color c) {
             return ((uint)Numbers.Floor(255f * c.r.Choke(0f, 1f)) << 24) |
                    ((uint)Numbers.Floor(255f * c.g.Choke(0f, 1f)) << 16) |
-                   ((uint)Numbers.Floor(255f * c.b.Choke(0f, 1f)) << 8 ) |
+                   ((uint)Numbers.Floor(255f * c.b.Choke(0f, 1f)) << 8) |
                    ((uint)Numbers.Floor(255f * c.a.Choke(0f, 1f)) << 0);
         }
 
-        public static implicit operator Color(uint input)
-        {
+        public static implicit operator Color(uint input) {
             return FromUnsignedInteger(input);
         }
 
-        
-        public static Color White { get { return new Color(1,1,1,1);} }
-        public static Color Black { get { return new Color(0,0,0,1);} }
-        public static Color Transparent { get { return new Color(0,0,0,0); } }
 
-        public Color Add(Color other, float multiplier)
-        {
+        public static Color White { get { return new Color(1, 1, 1, 1); } }
+        public static Color Black { get { return new Color(0, 0, 0, 1); } }
+        public static Color Transparent { get { return new Color(0, 0, 0, 0); } }
+
+        public Color Add(Color other, float multiplier) {
             return new Color(r + other.r * multiplier, g + other.g * multiplier, b + other.b * multiplier, a + other.a * multiplier);
         }
 
-        public void Constrain()
-        {
+        public void Constrain() {
             a = a.Choke(0f, 1f);
             r = r.Choke(0f, 1f);
             g = g.Choke(0f, 1f);
@@ -64,8 +54,8 @@ namespace Ur {
         }
 
         public bool IsNonZero() {
-            return 
-                r > float.Epsilon || 
+            return
+                r > float.Epsilon ||
                 g > float.Epsilon ||
                 b > float.Epsilon
             ;
@@ -89,7 +79,7 @@ namespace Ur {
         public void MultiplyRGB(float value) {
             r *= value;
             g *= value;
-            b *= value;            
+            b *= value;
         }
         public void MultiplyRGB(Color other) {
             r *= other.r;
@@ -97,14 +87,14 @@ namespace Ur {
             b *= other.b;
         }
 
-        static public Color operator + (Color a, Color b) {
-            return new Color( a.r + b.r, a.g + b.g, a.b + b.b, a.a + b.a); // gesundheit 
+        static public Color operator +(Color a, Color b) {
+            return new Color(a.r + b.r, a.g + b.g, a.b + b.b, a.a + b.a); // gesundheit 
         }
-        static public Color operator - (Color a, Color b) {
-            return new Color( a.r - b.r, a.g - b.g, a.b - b.b, a.a - b.a); // gesundheit 
+        static public Color operator -(Color a, Color b) {
+            return new Color(a.r - b.r, a.g - b.g, a.b - b.b, a.a - b.a); // gesundheit 
         }
 
-        static public Color operator * (Color ca, float cb) {
+        static public Color operator *(Color ca, float cb) {
             return new Color(ca.r * cb, ca.g * cb, ca.b * cb, ca.a);
         }
 
@@ -114,8 +104,7 @@ namespace Ur {
             return c;
         }
 
-        public static Color FromHSV(float h, float s, float v)
-        {
+        public static Color FromHSV(float h, float s, float v) {
             float m, n, f;
             var i = (h * 6f).Floor();
             f = h * 6f - i;
@@ -123,8 +112,7 @@ namespace Ur {
             m = v * (1 - s);
             n = v * (1 - s * f);
 
-            switch (i)
-            {
+            switch (i) {
                 case 0: return new Color(v, n, m);
                 case 1: return new Color(n, v, m);
                 case 2: return new Color(m, v, n);
@@ -133,7 +121,7 @@ namespace Ur {
                 case 5: return new Color(v, m, n);
             }
             throw new System.Exception("Invalid HSV to RGB!");
-            
+
         }
 
         public Color Lerp(Color other, float ratio) {
@@ -141,9 +129,8 @@ namespace Ur {
         }
     }
 
-    public interface IInterpolable<T>
-    {
-        T Lerp(T other, float ratio);  
-        T Add (T other, float mult);
+    public interface IInterpolable<T> {
+        T Lerp(T other, float ratio);
+        T Add(T other, float mult);
     }
 }

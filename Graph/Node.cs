@@ -7,12 +7,12 @@ namespace Ur.Graph {
 
         #region Fields
         private Dictionary<Edge, Node> edges;
-        private Dictionary<Node, Edge> neighbours; 
+        private Dictionary<Node, Edge> neighbours;
         #endregion
 
         #region Properties
         public int Index { get; }
-        public Graph Graph { get; } 
+        public Graph Graph { get; }
         public object Metadata { get; set; }
         #endregion
 
@@ -20,7 +20,7 @@ namespace Ur.Graph {
             Graph = graph;
             Index = ++instanceCounter;
             edges = new Dictionary<Edge, Node>();
-            neighbours = new Dictionary<Node, Edge>();            
+            neighbours = new Dictionary<Node, Edge>();
         }
 
         #region Management options, called by the Graph object.
@@ -46,7 +46,7 @@ namespace Ur.Graph {
             edges.Remove(e);
             neighbours.Remove(neighbour);
             AdjacencyChanged?.Invoke(this);
-        } 
+        }
         #endregion
 
 
@@ -68,7 +68,7 @@ namespace Ur.Graph {
 
         public IEnumerable<Node> AllNeighbours { get { return neighbours.Keys; } }
 
-        public IEnumerable<Edge> AllEdges      { get { return edges.Keys; } }
+        public IEnumerable<Edge> AllEdges { get { return edges.Keys; } }
 
         public IEnumerable<Node> Neighbours(Predicate<Node> predicate) {
             return neighbours.Keys.Where(n => predicate(n));
@@ -79,16 +79,16 @@ namespace Ur.Graph {
         }
 
         #endregion
-        
+
         #region Satisfaction of IComparable
         public int CompareTo(Node other) {
             return (Index - other.Index).Sign();
-        } 
+        }
         #endregion
 
         #region Static instance counter
         static private int instanceCounter;
         #endregion
-        
+
     }
 }

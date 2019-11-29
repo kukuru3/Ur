@@ -18,14 +18,14 @@ namespace Ur.Filesystem {
         #endregion
 
         public LoadingQueue() {
-            itemsPending    = new Queue<Loader>();
-            itemsCompleted  = new List<Loader>();
-            itemsFailed     = new List<Loader>();
+            itemsPending = new Queue<Loader>();
+            itemsCompleted = new List<Loader>();
+            itemsFailed = new List<Loader>();
             registeredLoaderClasses = new Dictionary<string, Type>();
         }
 
-        public int NumOfProcessedItems  => itemsCompleted.Count;
-        public int NumOfPendingItems    => itemsPending.Count;
+        public int NumOfProcessedItems => itemsCompleted.Count;
+        public int NumOfPendingItems => itemsPending.Count;
 
         /// <summary> The way it works is, you instantiate the LoadManager, preregister any loaders preferred for 
         /// various file types (identified by extension), and then execute. </summary>
@@ -40,7 +40,7 @@ namespace Ur.Filesystem {
             if (!fi.Exists) fi = new FileInfo(Directory.GetCurrentDirectory() + "\\" + path); // not sure if supported by default???
             if (!fi.Exists) throw new LoaderException(null, "Cannot load nonexistent file: " + path);
             var loader = GetLoaderInstance(fi.FullName);
-            if (loader != null) {                
+            if (loader != null) {
                 loader.BasePath = lastBasePath;
                 itemsPending.Enqueue(loader);
             }
@@ -49,21 +49,21 @@ namespace Ur.Filesystem {
         string lastBasePath = "";
 
         public void EnqueueDirectory(string path, bool searchSubfoldersAlso = true) {
-            
+
             var assetPath = Folders.GetDirectory(path);
-            
+
             var dir = new DirectoryInfo(assetPath);
 
             lastBasePath = dir.FullName;
 
-            #if DOTNET_35
+#if DOTNET_35
             throw new NotImplementedException();
-            #else
+#else
             var files = dir.EnumerateFiles("*.*", searchSubfoldersAlso ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
             foreach (var file in files) {
                 EnqueueFile(file.FullName);
             }
-            #endif
+#endif
         }
 
         public void Execute() {
@@ -71,15 +71,15 @@ namespace Ur.Filesystem {
         }
 
         void ThreadingWrapper(object obj) {
-            
-            while(itemsPending.Count > 0) {
+
+            while (itemsPending.Count > 0) {
                 LoadNext();
                 System.Threading.Thread.Sleep(1);
             }
         }
 
         void LoadNext() {
-            lock(itemsPending) { 
+            lock (itemsPending) {
                 var item = itemsPending.Dequeue();
                 item.Updated += FileUpdated;
                 item.StartLoad();
@@ -89,13 +89,13 @@ namespace Ur.Filesystem {
         /// <summary> An event triggered when loading updates</summary>
         public event LoaderEvent LoadingUpdate;
 
-        public event Action       AllTasksComplete;
-        
-        private void FileUpdated(LoaderEventArgs e) {            
+        public event Action AllTasksComplete;
+
+        private void FileUpdated(LoaderEventArgs e) {
 
             switch (e.State) {
-                case LoadStates.Completed: itemsCompleted.Add(e.Sender);  break;
-                case LoadStates.Failure:   itemsFailed.Add(e.Sender);     break;
+                case LoadStates.Completed: itemsCompleted.Add(e.Sender); break;
+                case LoadStates.Failure: itemsFailed.Add(e.Sender); break;
             }
 
             LoadingUpdate?.Invoke(e);
@@ -103,11 +103,11 @@ namespace Ur.Filesystem {
         }
 
         void CheckForCompletion() {
-            lock(itemsPending) { 
+            lock (itemsPending) {
                 if (itemsPending.Count == 0) AllTasksComplete?.Invoke();
             }
         }
-        
+
         Loader GetLoaderInstance(string path) {
             var ext = Path.GetExtension(path).Substring(1);
             if (registeredLoaderClasses.TryGetValue(ext, out Type t)) {

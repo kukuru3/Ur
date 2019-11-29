@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Ur.Typesystem {
+﻿namespace Ur.Typesystem {
     public interface ITypeConverter {
         object Convert(object source);
     }
