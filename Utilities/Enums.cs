@@ -12,6 +12,5 @@ namespace Ur {
         public static int MaxValue<T>() {
             return IterateValues<T>().Cast<int>().Max();
         }
-
     }
 }

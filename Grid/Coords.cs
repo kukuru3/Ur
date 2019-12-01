@@ -33,6 +33,8 @@ namespace Ur.Grid {
         public static Coords operator *(Coords a, int b) { return new Coords(a.X * b, a.Y * b); }
         public static Coords operator /(Coords a, int b) { return new Coords(a.X / b, a.Y / b); }
 
+        public static implicit operator Coords((int x, int y) fromTuple) => new Coords(fromTuple.x, fromTuple.y);
+
         public static float Distance(Coords a, Coords b) {
             var dx = (a.X - b.X); var dy = (a.Y - b.Y);
             return Numbers.Root(dx * dx + dy * dy);

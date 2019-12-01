@@ -33,6 +33,8 @@ namespace Ur.Geometry {
             }
         }
 
+        static public implicit operator Vector2((float x, float y) sourceTuple) => new Vector2(sourceTuple.x, sourceTuple.y);
+
         static public Vector2 operator +(Vector2 a, Vector2 b) => new Vector2(a.x + b.x, a.y + b.y);
         static public Vector2 operator -(Vector2 a, Vector2 b) => new Vector2(a.x - b.x, a.y - b.y);
 

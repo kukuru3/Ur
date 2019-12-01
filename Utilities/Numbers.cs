@@ -131,5 +131,11 @@ namespace Ur {
             return v;
         }
 
+        static public float MapNumber(this float sourceNumber, float sourceFrom, float sourceTo, float destFrom, float destTo) {
+            if (Approximately(sourceFrom, sourceTo)) return sourceNumber;
+            var lerpfactor = (sourceNumber - sourceFrom) / (sourceTo - sourceFrom);
+            return Lerp(destFrom, destTo, lerpfactor.Choke());
+        }
+
     }
 }

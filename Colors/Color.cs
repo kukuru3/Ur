@@ -72,7 +72,7 @@
             return new Color(r * factor, g * factor, b * factor, a);
         }
 
-        public static Color grey(float grayness, float alpha = 1f) {
+        public static Color Grey(float grayness, float alpha = 1f) {
             return new Color(grayness, grayness, grayness, alpha);
         }
 
