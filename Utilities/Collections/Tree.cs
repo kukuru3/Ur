@@ -4,11 +4,6 @@ using System.Linq;
 
 namespace Ur.Collections {
 
-    public enum FlattenMethods {
-        DepthFirst,
-        BreadthFirst,
-    }
-
     /// <summary> Is it efficient? Not really. Is it ubiquitous? Nah.
     /// Does it even make sense to have a generic all-purpose tree class? Of course not.
     /// Will it do the job needed for now? Hell yeah.</summary>
@@ -19,6 +14,7 @@ namespace Ur.Collections {
         private Dictionary<T, TreeNode> itemLookup;
         private HashSet<TreeNode> nodeSet;
         private TreeNode rootNode;
+        bool    treeDirty = true;
         #endregion
 
         #region C-tor
@@ -31,6 +27,7 @@ namespace Ur.Collections {
         #region Events
         public event Action<T> ItemRemoved;
         public event Action<T> ItemInserted;
+        public event Action<Tree<T>> TreeFlattened;
         #endregion
 
         private TreeNode GetNodeOf(T item) => itemLookup[item];
@@ -43,7 +40,7 @@ namespace Ur.Collections {
         public T ParentOf(T item) => GetNodeOf(item)?.parent?.MyItem;
         #endregion
 
-        public bool IsMemberOfTree(T item) => item != null && itemLookup.ContainsKey(item);
+        public bool ContainsItem(T item) => item != null && itemLookup.ContainsKey(item);
 
         public void Insert(T item, T asChildOf) {
             if (asChildOf == null) {
@@ -55,6 +52,8 @@ namespace Ur.Collections {
             }
         }
 
+        public T GetRootElement() => rootNode.MyItem;
+
         public void SortAllChildrenInTree(Comparison<T> comparison) {
 
             Comparison<TreeNode> childComparison = (TreeNode a, TreeNode b) => comparison(a.MyItem, b.MyItem);
@@ -64,17 +63,24 @@ namespace Ur.Collections {
             }
         }
 
+        public List<T> flattenedTree;
 
-        public IEnumerable<T> FlattenTreeHierarchy(FlattenMethods method = FlattenMethods.BreadthFirst) {
-            return _FlattenHierarchy(rootNode).Select(n => n.MyItem);
+        public IEnumerable<T> GetAllMembersInHierarchyOrder() {
+            if (treeDirty) { 
+                flattenedTree = _FlattenHierarchy(rootNode).Select(n => n.MyItem).ToList();
+                treeDirty = false;
+                TreeFlattened?.Invoke(this);
+            }
+
+            return flattenedTree;
         }
 
-        public IEnumerable<T> FlattenHierarchyFromNode(T item, FlattenMethods method = FlattenMethods.BreadthFirst) {
-            return _FlattenHierarchy(GetNodeOf(item), method).Select(n => n.MyItem);
+        public IEnumerable<T> FlattenHierarchyFromNode(T item) {
+            return _FlattenHierarchy(GetNodeOf(item)).Select(n => n.MyItem);
         }
 
         /// <summary> Remove all nodes whose parent node is no longer in the set.</summary>
-        internal void ShakeTree() {
+        private void ShakeTree() {
             bool repeat = true;
             while (repeat) {
                 var orphanNodes = nodeSet.Where(n => !nodeSet.Contains(n.parent)).ToList();
@@ -88,21 +94,17 @@ namespace Ur.Collections {
             }
         }
 
-        private IEnumerable<TreeNode> _FlattenHierarchy(TreeNode startingFrom, FlattenMethods method = FlattenMethods.BreadthFirst) {
+        private IEnumerable<TreeNode> _FlattenHierarchy(TreeNode startingFrom) {
             if (startingFrom == null) yield break;
 
-            if (method == FlattenMethods.BreadthFirst) {
-                var q = new Queue<TreeNode>();
-                q.Enqueue(startingFrom);
-                while (q.Count > 0) {
-                    var node = q.Dequeue();
-                    foreach (var child in node.children) q.Enqueue(child);
-                    yield return node;
-                }
-            } else if (method == FlattenMethods.DepthFirst) {
-                throw new NotImplementedException("Coming soon");
+            
+            var q = new Queue<TreeNode>();
+            q.Enqueue(startingFrom);
+            while (q.Count > 0) {
+                var node = q.Dequeue();
+                foreach (var child in node.children) q.Enqueue(child);
+                yield return node;
             }
-
         }
 
         #region Node creation, deletion
@@ -123,10 +125,11 @@ namespace Ur.Collections {
         }
 
         public void Remove(T item) {
-            if (!IsMemberOfTree(item)) return;
+            if (!ContainsItem(item)) return;
             var node = GetNodeOf(item);
             DestroyNode(node);
             ShakeTree();
+            treeDirty = true;
         }
 
         private void DestroyNode(TreeNode node) {
@@ -136,6 +139,7 @@ namespace Ur.Collections {
             ItemRemoved?.Invoke(node.MyItem);
             foreach (var child in node.children.ToArray())
                 DestroyNode(child);
+            treeDirty = true;
         }
         #endregion
 
@@ -165,10 +169,10 @@ namespace Ur.Collections {
         }
 
         private void EnsureNotInTree(T forItem) {
-            if (IsMemberOfTree(forItem)) throw new InvalidOperationException("Node already exists...");
+            if (ContainsItem(forItem)) throw new InvalidOperationException("Node already exists...");
         }
         private void EnsureInTree(T forItem) {
-            if (!IsMemberOfTree(forItem)) throw new InvalidOperationException("Node does not exist, but should.");
+            if (!ContainsItem(forItem)) throw new InvalidOperationException("Node does not exist, but should.");
         }
         #endregion
 

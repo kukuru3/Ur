@@ -60,6 +60,10 @@
             return new Rect(X0 + offX, Y0 + offY, X1 + offX, Y1 + offY);
         }
 
+        public static implicit operator Rect((int x, int y, int w, int h) tuple) {
+            return Rect.FromDimensions(tuple.x, tuple.y, tuple.w, tuple.h);
+        }
+
 
     }
 }

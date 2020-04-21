@@ -51,7 +51,7 @@
         }
 
         public override int GetHashCode() => x.GetHashCode() ^ (y + 31f).GetHashCode() ^ (z + 31f * 37f).GetHashCode();
-        public string Print => $"[{x.ToString("F")},{y.ToString("F")},{z.ToString("F")}]";
+        public string Print => $"[{x:F},{y:F},{z:F}]";
         public override string ToString() => Print;
 
         public Vector2 Flatten {

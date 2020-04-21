@@ -49,6 +49,7 @@
         protected abstract void Load();
 
         public object LoadedAssetItem { get; protected set; }
+        public object LoadedAssetMetadata { get; protected set; }
 
     }
     public abstract class Loader<T> : Loader {
