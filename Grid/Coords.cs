@@ -33,6 +33,11 @@ namespace Ur.Grid {
         public static Coords operator *(Coords a, int b) { return new Coords(a.X * b, a.Y * b); }
         public static Coords operator /(Coords a, int b) { return new Coords(a.X / b, a.Y / b); }
 
+        public static Vector2 operator*(Coords a, float f) => new Vector2(a.X * f, a.Y * f);
+        public static Vector2 operator/(Coords a, float f) => new Vector2(a.X / f, a.Y / f);
+
+        public static Vector2 operator/(Coords a, Vector2 b) => new Vector2(a.X / b.x, a.Y / b.y);
+
         public static implicit operator Coords((int x, int y) fromTuple) => new Coords(fromTuple.x, fromTuple.y);
 
         public static float Distance(Coords a, Coords b) {
@@ -47,7 +52,7 @@ namespace Ur.Grid {
 
         public Vector2 ToFloat() => new Vector2(X, Y);
 
-        public bool Equals(Coords other) { return this == other; }
+        public bool Equals(Coords other) => this == other;
 
         static public IEnumerable<Coords> Iterate(int w, int h) {
             for (var y = 0; y < h; y++)
@@ -60,7 +65,7 @@ namespace Ur.Grid {
             return new Coords(this.X + deltaX, this.Y + deltaY);
         }
 
-        Coords IHasPosition.Position { get { return this; } }
+        Coords IHasPosition.Position => this;
 
     }
 }

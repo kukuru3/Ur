@@ -35,7 +35,6 @@ namespace Ur.Filesystem {
 
         static public string GetAppDataDirectory() {
             return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-
         }
 
     }

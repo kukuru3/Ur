@@ -3,8 +3,7 @@ using System.Collections.Generic;
 
 namespace Ur.Grid {
 
-    public delegate T Advanced2DConstructor<T>(IGrid<T> owner, int x, int y);
-    public delegate T Simple2DConstructor<T>(int x, int y);
+    public delegate T TileProvider<T>(int x, int y);
 
     public class Grid2D<T> : IGrid<T> {
 
@@ -31,7 +30,7 @@ namespace Ur.Grid {
             tiles = new T[w, h];
         }
 
-        public void CreateTiles(Simple2DConstructor<T> c) {
+        public void CreateTiles(TileProvider<T> c) {
             foreach (var tile in tiles.Iterate()) tiles[tile.X, tile.Y] = c(tile.X, tile.Y);
         }
 
@@ -50,8 +49,4 @@ namespace Ur.Grid {
         }
 
     }
-
-
-
-
 }
