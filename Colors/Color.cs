@@ -1,4 +1,6 @@
-﻿namespace Ur {
+﻿using System.Runtime.CompilerServices;
+
+namespace Ur {
 
     public struct Color : IInterpolable<Color> {
 
@@ -33,13 +35,25 @@
                    ((uint)Numbers.Floor(255f * c.a.Choke(0f, 1f)) << 0);
         }
 
+        public static implicit operator uint(Color c) {
+            return ToUnsignedInteger(c);
+        }
+
         public static implicit operator Color(uint input) {
             return FromUnsignedInteger(input);
         }
 
+        public static implicit operator Color((float r, float g, float b) fromTuple) 
+            => new Color(fromTuple.r, fromTuple.g, fromTuple.b, 1);
 
-        public static Color White { get { return new Color(1, 1, 1, 1); } }
-        public static Color Black { get { return new Color(0, 0, 0, 1); } }
+        public static implicit operator Color((float r, float g, float b, float a) fromTuple)
+            => new Color(fromTuple.r, fromTuple.g, fromTuple.b, fromTuple.a);
+
+        public static implicit operator Color((double r, double g, double b) fromTuple)
+            => new Color((float)fromTuple.r, (float)fromTuple.g, (float)fromTuple.b, 1);
+
+        public static Color White => new Color(1, 1, 1, 1);
+        public static Color Black => new Color(0, 0, 0, 1);
         public static Color Transparent { get { return new Color(0, 0, 0, 0); } }
 
         public Color Add(Color other, float multiplier) {

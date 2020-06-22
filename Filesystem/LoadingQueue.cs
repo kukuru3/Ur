@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Ur.Filesystem {
 
@@ -68,6 +69,14 @@ namespace Ur.Filesystem {
 
         public void Execute() {
             System.Threading.ThreadPool.QueueUserWorkItem(ThreadingWrapper);
+        }
+
+        public async Task<bool> ExecuteAsync() {
+            while (itemsPending.Count > 0) {
+                LoadNext();
+                await Task.Delay(1);
+            }
+            return true;
         }
 
         void ThreadingWrapper(object obj) {
