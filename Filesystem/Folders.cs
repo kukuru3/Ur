@@ -6,7 +6,7 @@ namespace Ur.Filesystem {
     static public class Folders {
 
         static private HashSet<string> folderCorrections = new HashSet<string>(new[] {
-            "Release", "Debug", "Debug32", "Release32", "Debug64", "Release64", "Build", "x86", "x64", "bin", "netcoreapp3.0"
+            "Release", "Debug", "Debug32", "Release32", "Debug64", "Release64", "Build", "x86", "x64", "bin", "netcoreapp3.0", "netcoreapp3.1",
         });
 
         static private void DoPathsCorrection(string[] additions = null) {

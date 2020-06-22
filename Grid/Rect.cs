@@ -56,5 +56,9 @@ namespace Ur.Grid {
         public static Rect FromBounds(int minX, int maxX, int minY, int maxY) {
             return new Rect(minX, minY, maxX - minX + 1, maxY - minY + 1);
         }
+
+        public static implicit operator Rect((int x, int y, int w, int h) tuple) {
+            return new Rect(tuple.x, tuple.y, tuple.w, tuple.h);
+        }
     }
 }
