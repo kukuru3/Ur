@@ -31,7 +31,7 @@ namespace Ur.Random {
                 }
             }
             if (sum <= 0) return default(T);
-            var roll = rng.Next(0, sum - 1);
+            var roll = rng.Next(0, sum -1);
             sum = 0;
 
             for (var i = 0; i < probs.Count; i++) {

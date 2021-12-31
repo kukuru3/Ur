@@ -71,17 +71,19 @@ namespace Ur.Random {
         }
 
         public float NextGaussian(float mean, float sigma) {
-            return mean + BoxMuller() * sigma;
+            lock(this) { 
+                return mean + BoxMuller() * sigma; 
+            }
         }
 
         /// <summary> Since Box-Muller generates 2 independent uniform variables during execution, we can save 1 for the next call.</summary>
         private float? boxMullerSpare;
         private float BoxMuller() {
 
-            if (boxMullerSpare != null) {
-                var val = boxMullerSpare.Value;
+            if (boxMullerSpare.HasValue) {
+                var temp = boxMullerSpare.Value;
                 boxMullerSpare = null;
-                return val;
+                return temp;
             }
             float x, y, z;
             do {
